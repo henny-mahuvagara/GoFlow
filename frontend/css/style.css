@@ -1,0 +1,977 @@
+/* --- 1. Design Tokens --- */
+:root {
+    /* Base Backgrounds */
+    --goflow-white: #FFFFFF;
+    --goflow-background: #F8FAFC;
+    --goflow-surface: #FFFFFF;
+    --goflow-surface-subtle: #F1F5F9;
+
+    /* Typography & Structural Colors */
+    --goflow-navy: #0F172A;
+    --goflow-navy-light: #334155;
+    --goflow-muted: #64748B;
+    --goflow-border: #E2E8F0;
+    --goflow-border-light: #EDF2F7;
+
+    /* Mobility Orange (Primary Action & Transit) */
+    --goflow-orange: #FF6B2C;
+    --goflow-orange-hover: #E85B1F;
+    --goflow-orange-light: #FFF1EB;
+    --goflow-orange-glow: rgba(255, 107, 44, 0.25);
+
+    /* GPS / Telemetry Cyan */
+    --goflow-cyan: #18BFEF;
+    --goflow-cyan-dark: #0EA5C7;
+    --goflow-cyan-light: #EAF9FE;
+    --goflow-cyan-glow: rgba(24, 191, 239, 0.25);
+
+    /* Signal Status Green */
+    --goflow-green: #22C55E;
+    --goflow-green-light: #ECFDF3;
+    --goflow-green-glow: rgba(34, 197, 94, 0.25);
+
+    /* Elevations & Radii */
+    --goflow-shadow-sm: 0 2px 6px rgba(15, 23, 42, 0.04);
+    --goflow-shadow: 0 10px 30px rgba(15, 23, 42, 0.07);
+    --goflow-shadow-lg: 0 18px 40px rgba(15, 23, 42, 0.1);
+    --goflow-shadow-orange: 0 8px 20px rgba(255, 107, 44, 0.3);
+
+    --goflow-radius-sm: 8px;
+    --goflow-radius-md: 12px;
+    --goflow-radius-lg: 18px;
+    --goflow-radius-pill: 9999px;
+
+    --goflow-transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- 2. Reset / Base --- */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+}
+
+body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: var(--goflow-navy);
+    background-color: var(--goflow-white);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+
+/* Subtle Urban Light Grid Pattern */
+.light-urban-grid {
+    background-image:
+        linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+}
+
+/* --- 3. Typography --- */
+.fw-extrabold {
+    font-weight: 800;
+}
+
+.text-navy {
+    color: var(--goflow-navy) !important;
+}
+
+.text-navy-light {
+    color: var(--goflow-navy-light) !important;
+}
+
+.text-orange {
+    color: var(--goflow-orange) !important;
+}
+
+.text-cyan {
+    color: var(--goflow-cyan-dark) !important;
+}
+
+.text-signal-green {
+    color: var(--goflow-green) !important;
+}
+
+.text-gradient-urban {
+    background: linear-gradient(135deg, var(--goflow-navy) 20%, var(--goflow-orange) 100%);
+    -webkit-background-clip: text;
+    /* -webkit-text-fill-color: transparent; */
+}
+
+/* --- 4. Global Utilities & Badges --- */
+.badge-urban-light {
+    background-color: var(--goflow-orange-light);
+    color: var(--goflow-orange);
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 0.4rem 1.1rem;
+    border-radius: var(--goflow-radius-pill);
+    border: 1px solid rgba(255, 107, 44, 0.2);
+    display: inline-flex;
+    align-items: center;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.section-badge-light {
+    display: inline-block;
+    color: var(--goflow-orange);
+    background-color: var(--goflow-orange-light);
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    padding: 0.35rem 1rem;
+    border-radius: var(--goflow-radius-pill);
+    border: 1px solid rgba(255, 107, 44, 0.2);
+}
+
+.status-dot-green {
+    width: 8px;
+    height: 8px;
+    background-color: var(--goflow-green);
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+    animation: pulseSignal 2s infinite;
+}
+
+@keyframes pulseSignal {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+    }
+}
+
+/* --- 5. Navbar --- */
+.navbar-goflow {
+    background-color: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--goflow-border);
+    padding: 0.85rem 0;
+    transition: var(--goflow-transition);
+}
+
+.brand-logo-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, var(--goflow-orange) 0%, #FF8A4C 100%);
+    color: #FFFFFF;
+    border-radius: var(--goflow-radius-md);
+    font-size: 1.15rem;
+    box-shadow: 0 4px 12px var(--goflow-orange-glow);
+}
+
+.brand-name {
+    font-weight: 800;
+    font-size: 1.45rem;
+    letter-spacing: -0.5px;
+    color: var(--goflow-navy);
+}
+
+.brand-name span {
+    color: var(--goflow-orange);
+}
+
+.navbar-goflow .nav-link {
+    font-weight: 600;
+    font-size: 0.94rem;
+    color: var(--goflow-navy-light);
+    padding: 0.5rem 1.1rem !important;
+    border-radius: var(--goflow-radius-md);
+    transition: var(--goflow-transition);
+}
+
+.navbar-goflow .nav-link:hover,
+.navbar-goflow .nav-link:focus {
+    color: var(--goflow-orange);
+    background-color: var(--goflow-orange-light);
+}
+
+.navbar-goflow .nav-link.active {
+    color: var(--goflow-orange);
+    background-color: var(--goflow-orange-light);
+}
+
+/* --- Navbar Authentication Controls --- */
+.navbar-divider {
+    display: inline-block;
+    width: 1px;
+    height: 22px;
+    background-color: var(--goflow-border);
+    margin: 0 0.5rem;
+}
+
+/* 1. Login Button (Clean secondary action) */
+.navbar-goflow .nav-auth-login,
+a.nav-auth-login,
+.nav-auth-login,
+.btn-navbar-login {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 38px;
+    padding: 0 1.25rem;
+    font-size: 0.94rem;
+    font-weight: 600;
+    color: var(--goflow-orange, #FF6B2C);
+    background-color: var(--goflow-white, #FFFFFF);
+    border: 1.5px solid var(--goflow-orange, #FF6B2C);
+    border-radius: 10px;
+    text-decoration: none !important;
+    transition: var(--goflow-transition, all 0.25s cubic-bezier(0.4, 0, 0.2, 1));
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.navbar-goflow .nav-auth-login:hover,
+.navbar-goflow .nav-auth-login:focus,
+a.nav-auth-login:hover,
+a.nav-auth-login:focus,
+.nav-auth-login:hover,
+.nav-auth-login:focus,
+.btn-navbar-login:hover,
+.btn-navbar-login:focus {
+    background-color: var(--goflow-orange-light, #FFF1EB);
+    border-color: var(--goflow-orange-hover, #E85B1F);
+    color: var(--goflow-orange-hover, #E85B1F);
+    text-decoration: none !important;
+    transform: translateY(-1px);
+}
+
+.navbar-goflow .nav-auth-login:focus-visible,
+a.nav-auth-login:focus-visible,
+.nav-auth-login:focus-visible,
+.btn-navbar-login:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--goflow-orange-glow, rgba(255, 107, 44, 0.25));
+}
+
+.navbar-goflow .nav-auth-login.active,
+a.nav-auth-login.active,
+.nav-auth-login.active,
+.btn-navbar-login.active {
+    background-color: var(--goflow-orange-light, #FFF1EB);
+    border-color: var(--goflow-orange, #FF6B2C);
+    color: var(--goflow-orange, #FF6B2C);
+    text-decoration: none !important;
+}
+
+/* 2. Sign Up Button (Primary CTA) */
+.navbar-goflow .nav-auth-signup,
+a.nav-auth-signup,
+.nav-auth-signup,
+.btn-navbar-signup {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 38px;
+    padding: 0 1.35rem;
+    font-size: 0.94rem;
+    font-weight: 700;
+    color: #FFFFFF !important;
+    background-color: var(--goflow-orange, #FF6B2C);
+    border: 1.5px solid var(--goflow-orange, #FF6B2C);
+    border-radius: 10px;
+    text-decoration: none !important;
+    box-shadow: 0 4px 12px rgba(255, 107, 44, 0.28);
+    transition: var(--goflow-transition, all 0.25s cubic-bezier(0.4, 0, 0.2, 1));
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.navbar-goflow .nav-auth-signup:hover,
+.navbar-goflow .nav-auth-signup:focus,
+a.nav-auth-signup:hover,
+a.nav-auth-signup:focus,
+.nav-auth-signup:hover,
+.nav-auth-signup:focus,
+.btn-navbar-signup:hover,
+.btn-navbar-signup:focus {
+    background-color: var(--goflow-orange-hover, #E85B1F);
+    border-color: var(--goflow-orange-hover, #E85B1F);
+    color: #FFFFFF !important;
+    text-decoration: none !important;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(255, 107, 44, 0.38);
+}
+
+.navbar-goflow .nav-auth-signup:focus-visible,
+a.nav-auth-signup:focus-visible,
+.nav-auth-signup:focus-visible,
+.btn-navbar-signup:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 107, 44, 0.4);
+}
+
+.navbar-goflow .nav-auth-signup:active,
+a.nav-auth-signup:active,
+.nav-auth-signup:active,
+.btn-navbar-signup:active {
+    transform: translateY(0);
+}
+
+.navbar-goflow .nav-auth-signup.active,
+a.nav-auth-signup.active,
+.nav-auth-signup.active,
+.btn-navbar-signup.active {
+    background-color: var(--goflow-orange-hover, #E85B1F);
+    border-color: var(--goflow-orange-hover, #E85B1F);
+    color: #FFFFFF !important;
+    text-decoration: none !important;
+}
+
+/* 3. Welcome User Badge (Logged-in state) */
+.nav-user-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    background-color: var(--goflow-surface-subtle);
+    border: 1px solid var(--goflow-border);
+    border-radius: var(--goflow-radius-pill);
+    padding: 0.3rem 0.95rem 0.3rem 0.35rem;
+    transition: var(--goflow-transition);
+}
+
+.nav-user-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--goflow-orange) 0%, #FF8A4C 100%);
+    color: #FFFFFF;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(255, 107, 44, 0.25);
+}
+
+.nav-user-name {
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--goflow-navy-light);
+    white-space: nowrap;
+}
+
+.nav-user-name strong {
+    font-weight: 700;
+    color: var(--goflow-navy);
+}
+
+/* 4. Logout Button (Logged-in state) */
+.btn-nav-logout {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    height: 38px;
+    padding: 0 1.25rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--goflow-navy);
+    background-color: var(--goflow-white);
+    border: 1.5px solid var(--goflow-border);
+    border-radius: var(--goflow-radius-md);
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--goflow-transition);
+    white-space: nowrap;
+    line-height: 1;
+}
+
+.btn-nav-logout i {
+    font-size: 0.95rem;
+    color: var(--goflow-muted);
+    transition: var(--goflow-transition);
+}
+
+.btn-nav-logout:hover,
+.btn-nav-logout:focus {
+    background-color: var(--goflow-orange-light);
+    border-color: rgba(255, 107, 44, 0.4);
+    color: var(--goflow-orange-hover);
+    transform: translateY(-1px);
+}
+
+.btn-nav-logout:hover i,
+.btn-nav-logout:focus i {
+    color: var(--goflow-orange-hover);
+}
+
+.btn-nav-logout:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.12);
+}
+
+/* --- 6. Buttons --- */
+.btn-primary-goflow {
+    background-color: var(--goflow-orange);
+    color: #FFFFFF;
+    font-weight: 700;
+    border: 1px solid var(--goflow-orange);
+    border-radius: var(--goflow-radius-md);
+    padding: 0.75rem 1.75rem;
+    transition: var(--goflow-transition);
+    box-shadow: var(--goflow-shadow-orange);
+    text-decoration: none;
+    letter-spacing: -0.2px;
+}
+
+.btn-primary-goflow:hover,
+.btn-primary-goflow:focus {
+    background-color: var(--goflow-orange-hover);
+    border-color: var(--goflow-orange-hover);
+    color: #FFFFFF;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(255, 107, 44, 0.4);
+}
+
+.btn-secondary-goflow {
+    background-color: var(--goflow-white);
+    color: var(--goflow-navy);
+    font-weight: 700;
+    border: 1.5px solid var(--goflow-border);
+    border-radius: var(--goflow-radius-md);
+    padding: 0.75rem 1.75rem;
+    transition: var(--goflow-transition);
+    text-decoration: none;
+    box-shadow: var(--goflow-shadow-sm);
+}
+
+.btn-secondary-goflow:hover,
+.btn-secondary-goflow:focus {
+    background-color: var(--goflow-surface-subtle);
+    color: var(--goflow-navy);
+    border-color: var(--goflow-navy-light);
+    transform: translateY(-2px);
+}
+
+.btn-outline-goflow {
+    background-color: transparent;
+    color: var(--goflow-navy);
+    font-weight: 700;
+    border: 1.5px solid var(--goflow-border);
+    border-radius: var(--goflow-radius-md);
+    padding: 0.75rem 1.75rem;
+    transition: var(--goflow-transition);
+    text-decoration: none;
+}
+
+.btn-outline-goflow:hover,
+.btn-outline-goflow:focus {
+    background-color: var(--goflow-white);
+    border-color: var(--goflow-navy);
+    color: var(--goflow-navy);
+}
+
+/* --- 7. Hero Section --- */
+.hero-section {
+    padding-top: 130px;
+    padding-bottom: 85px;
+    background:
+        radial-gradient(circle at 85% 20%, rgba(255, 107, 44, 0.05) 0%, transparent 60%),
+        radial-gradient(circle at 10% 80%, rgba(24, 191, 239, 0.05) 0%, transparent 50%),
+        var(--goflow-white);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-title {
+    letter-spacing: -1.2px;
+    color: var(--goflow-navy);
+    line-height: 1.15;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: var(--goflow-navy-light);
+    max-width: 520px;
+}
+
+/* --- 8. Live Network Visual (Hero Right Side) --- */
+.network-panel-light {
+    background: var(--goflow-white);
+    border: 1px solid var(--goflow-border);
+    border-radius: var(--goflow-radius-lg);
+    box-shadow: var(--goflow-shadow);
+    position: relative;
+    overflow: hidden;
+    max-width: 480px;
+}
+
+.network-panel-header {
+    background-color: #FAFCFE;
+    border-bottom: 1px solid var(--goflow-border);
+    padding: 0.9rem 1.25rem;
+}
+
+.network-grid-canvas {
+    position: relative;
+    padding: 2.25rem 1.5rem;
+    min-height: 240px;
+    background-color: #FAFBFD;
+    background-image:
+        linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+
+/* SVG Vector Lines */
+.network-svg-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.route-vector-primary {
+    stroke: var(--goflow-orange);
+    stroke-width: 3;
+    stroke-linecap: round;
+}
+
+.route-vector-secondary {
+    stroke: var(--goflow-cyan);
+    stroke-width: 2.5;
+    stroke-dasharray: 4, 4;
+    stroke-linecap: round;
+}
+
+/* Light Location Nodes */
+.light-gps-node {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    z-index: 3;
+    box-shadow: var(--goflow-shadow-sm);
+    transition: var(--goflow-transition);
+}
+
+.node-origin {
+    top: 22%;
+    left: 14%;
+    background: var(--goflow-white);
+    border: 2px solid var(--goflow-orange);
+    color: var(--goflow-orange);
+}
+
+.node-vehicle {
+    top: 36%;
+    left: 48%;
+    background: var(--goflow-orange);
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px var(--goflow-orange-glow);
+}
+
+.node-package {
+    bottom: 25%;
+    left: 36%;
+    background: var(--goflow-cyan);
+    color: #FFFFFF;
+    box-shadow: 0 4px 12px var(--goflow-cyan-glow);
+}
+
+.node-destination {
+    bottom: 22%;
+    right: 14%;
+    background: var(--goflow-white);
+    border: 2px solid var(--goflow-green);
+    color: var(--goflow-green);
+}
+
+.network-status-footer {
+    background-color: #FAFCFE;
+    border-top: 1px solid var(--goflow-border);
+    padding: 0.85rem 1.25rem;
+}
+
+.chip-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: var(--goflow-radius-sm);
+    background: var(--goflow-white);
+    border: 1px solid var(--goflow-border);
+}
+
+/* --- 9. Services Section --- */
+.services-section {
+    background-color: var(--goflow-background);
+    position: relative;
+}
+
+.service-card-light {
+    background: var(--goflow-white);
+    border: 1px solid var(--goflow-border);
+    border-radius: var(--goflow-radius-lg);
+    box-shadow: var(--goflow-shadow-sm);
+    transition: var(--goflow-transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.service-card-light:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--goflow-shadow);
+    border-color: rgba(255, 107, 44, 0.4);
+}
+
+.service-card-light::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--goflow-orange), var(--goflow-cyan));
+    opacity: 0;
+    transition: var(--goflow-transition);
+}
+
+.service-card-light:hover::before {
+    opacity: 1;
+}
+
+.service-icon-wrapper-light {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--goflow-radius-md);
+    background: var(--goflow-orange-light);
+    color: var(--goflow-orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    transition: var(--goflow-transition);
+}
+
+.service-card-light:hover .service-icon-wrapper-light {
+    background: var(--goflow-orange);
+    color: #FFFFFF;
+}
+
+/* Route Schematics on Service Cards */
+.card-route-schematic {
+    background: #F8FAFC;
+    border: 1px dashed var(--goflow-border);
+    border-radius: var(--goflow-radius-sm);
+    padding: 0.55rem 0.85rem;
+    font-size: 0.78rem;
+    color: var(--goflow-muted);
+}
+
+.schematic-track {
+    height: 2px;
+    background: linear-gradient(90deg, var(--goflow-orange), var(--goflow-cyan));
+    flex-grow: 1;
+    margin: 0 8px;
+    border-radius: 2px;
+}
+
+.schematic-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--goflow-orange);
+}
+
+.service-action-link {
+    color: var(--goflow-orange);
+    text-decoration: none;
+    font-size: 0.92rem;
+    font-weight: 700;
+    transition: var(--goflow-transition);
+}
+
+.service-action-link:hover {
+    color: var(--goflow-orange-hover);
+    transform: translateX(4px);
+}
+
+/* --- 10. How It Works Section --- */
+.how-it-works-section {
+    background-color: var(--goflow-white);
+    position: relative;
+}
+
+.step-card-light {
+    background: var(--goflow-white);
+    border: 1px solid var(--goflow-border);
+    border-radius: var(--goflow-radius-lg);
+    box-shadow: var(--goflow-shadow-sm);
+    transition: var(--goflow-transition);
+    position: relative;
+    z-index: 2;
+}
+
+.step-card-light:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--goflow-shadow);
+    border-color: var(--goflow-orange);
+}
+
+.step-node-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--goflow-radius-md);
+    background: var(--goflow-orange-light);
+    color: var(--goflow-orange);
+    font-weight: 800;
+    font-size: 1.1rem;
+    border: 1px solid rgba(255, 107, 44, 0.2);
+}
+
+/* Horizontal Journey Route Line (Desktop) */
+.connected-journey-track {
+    position: relative;
+}
+
+.connected-journey-track::before {
+    content: '';
+    position: absolute;
+    top: 48px;
+    left: 12%;
+    right: 12%;
+    height: 2px;
+    background: linear-gradient(90deg,
+            var(--goflow-orange) 0%,
+            var(--goflow-cyan) 50%,
+            var(--goflow-green) 100%);
+    z-index: 1;
+    opacity: 0.4;
+}
+
+/* --- 11. About Section --- */
+.about-section {
+    background-color: var(--goflow-background);
+}
+
+.about-feature-box {
+    background: var(--goflow-white);
+    border: 1px solid var(--goflow-border);
+    border-radius: var(--goflow-radius-md);
+    padding: 1rem 1.25rem;
+    transition: var(--goflow-transition);
+}
+
+.about-feature-box:hover {
+    border-color: var(--goflow-orange);
+    box-shadow: var(--goflow-shadow-sm);
+}
+
+.network-tree-diagram {
+    background: var(--goflow-white);
+    border: 1px solid var(--goflow-border);
+    border-radius: var(--goflow-radius-lg);
+    box-shadow: var(--goflow-shadow);
+    padding: 2.25rem 1.5rem;
+    text-align: center;
+}
+
+.hub-root-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--goflow-navy);
+    color: #FFFFFF;
+    font-weight: 800;
+    font-size: 0.95rem;
+    padding: 0.55rem 1.4rem;
+    border-radius: var(--goflow-radius-pill);
+    box-shadow: var(--goflow-shadow-sm);
+}
+
+.hub-vertical-line {
+    width: 2px;
+    height: 24px;
+    background: var(--goflow-orange);
+    margin: 6px auto;
+    opacity: 0.6;
+}
+
+.hub-leaf-grid {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.hub-leaf-item {
+    background: #F8FAFC;
+    border: 1px solid var(--goflow-border);
+    padding: 0.65rem 1.1rem;
+    border-radius: var(--goflow-radius-md);
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--goflow-navy);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* --- 12. Contact / CTA Section --- */
+.cta-section {
+    background-color: var(--goflow-white);
+    position: relative;
+}
+
+.cta-light-card {
+    max-width: 860px;
+    background: var(--goflow-background);
+    border: 1px solid var(--goflow-border);
+    border-radius: var(--goflow-radius-lg);
+    box-shadow: var(--goflow-shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+/* .cta-light-card::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 140px;
+    height: 140px;
+    background: radial-gradient(circle, var(--goflow-orange-glow) 0%, transparent 70%);
+    pointer-events: none;
+} */
+
+.cta-desc {
+    max-width: 540px;
+    font-size: 1.1rem;
+    color: var(--goflow-navy-light);
+}
+
+/* --- 13. Footer --- */
+.footer-section {
+    background-color: #F8FAFC !important;
+    border-top: 1px solid var(--goflow-border);
+    color: var(--goflow-navy);
+}
+
+.footer-heading {
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--goflow-navy);
+}
+
+.footer-links li {
+    margin-bottom: 0.55rem;
+}
+
+.footer-links a {
+    color: var(--goflow-muted);
+    text-decoration: none;
+    font-size: 0.92rem;
+    transition: var(--goflow-transition);
+}
+
+.footer-links a:hover {
+    color: var(--goflow-orange);
+    padding-left: 3px;
+}
+
+/* --- 14. Responsive Design --- */
+@media (max-width: 991.98px) {
+    .hero-section {
+        padding-top: 110px;
+        padding-bottom: 60px;
+    }
+
+    .connected-journey-track::before {
+        display: none;
+    }
+
+    .navbar-collapse {
+        background-color: var(--goflow-white);
+        padding: 1.25rem;
+        border-radius: var(--goflow-radius-md);
+        box-shadow: var(--goflow-shadow-lg);
+        margin-top: 0.75rem;
+        border: 1px solid var(--goflow-border);
+    }
+
+    .navbar-divider {
+        display: none !important;
+    }
+
+    .nav-auth-separator-mobile {
+        border-top: 1px solid var(--goflow-border);
+        margin: 0.75rem 0 0.25rem 0;
+        padding-top: 0.5rem;
+        width: 100%;
+    }
+
+    .nav-auth-login,
+    .nav-auth-signup,
+    .btn-navbar-login,
+    .btn-navbar-signup,
+    .btn-nav-logout {
+        width: 100%;
+        height: 42px;
+        display: flex;
+        font-size: 0.95rem;
+    }
+
+    .nav-user-badge {
+        width: 100%;
+        justify-content: flex-start;
+        padding: 0.5rem 0.85rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .hero-title {
+        font-size: 2.3rem;
+    }
+
+    .cta-light-card {
+        padding: 2.25rem 1.25rem !important;
+    }
+
+    .hub-leaf-grid {
+        flex-direction: column;
+    }
+}
+
+/* --- 15. Accessibility / Reduced Motion --- */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

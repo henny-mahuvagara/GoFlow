@@ -1,0 +1,157 @@
+﻿{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}GoFlow - Real Time Mobility &amp; Delivery{% endblock %}
+
+{% block body_class %}light-urban-grid{% endblock %}
+
+{% block content %}
+    <!-- Main Content Area -->
+    <main>
+        <!--Hero Section -->
+        <section id="home" class="hero-section position-relative d-flex align-items-center">
+            <div class="container position-relative">
+                <div class="row align-items-center gy-5">
+                    <div class="col-lg-6 text-center text-lg-start">
+                        <div class="badge-urban-light mb-3">
+                            <span>Real-Time Mobility &amp; Delivery</span>
+                        </div>
+                        <h1 class="hero-title display-4 fw-extrabold mb-3">
+                            Move. Deliver. <span class="text-gradient-urban">Connect.</span>
+                        </h1>
+                        <p class="hero-subtitle lead mb-4">
+                            Your everyday mobility and delivery platform.
+                        </p>
+                        <div class="hero-cta-group d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
+                            <a href="{% url 'create_ride' %}"
+                                class="btn btn-primary-goflow btn-lg d-inline-flex align-items-center gap-2">
+                                <i class="bi bi-car-front-fill"></i>
+                                <span>Book a Ride</span>
+                            </a>
+                            <a href="#services"
+                                class="btn btn-secondary-goflow btn-lg d-inline-flex align-items-center gap-2">
+                                <i class="bi bi-box-seam-fill"></i>
+                                <span>Send a Package</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="services-section py-5">
+            <div class="container py-lg-4">
+                <div class="section-header text-center mb-5">
+                    <h2 class="section-title h1 fw-bold mt-2 mb-3 text-navy">Our Services</h2>
+                    <p class="section-subtitle text-muted mx-auto">
+                        Engineered to provide unified, reliable, on-demand transport and logistics across the urban grid.
+                    </p>
+                </div>
+
+                <div class="row g-4 justify-content-center">
+                    <!-- Service 1: Ride -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card service-card-light h-100 p-4 border-0">
+                            <div class="service-icon-wrapper-light mb-4">
+                                <i class="bi bi-car-front-fill"></i>
+                            </div>
+                            <h3 class="service-title h4 fw-bold mb-3 text-navy">Ride</h3>
+                            <p class="service-desc text-muted mb-4">
+                                Book a ride from your current location to your destination.
+                            </p>
+                            <div class="mt-auto">
+                                <a href="#how-it-works" class="service-action-link d-inline-flex align-items-center gap-2">
+                                    <span>Learn more</span>
+                                    <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Service 2: Delivery -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card service-card-light h-100 p-4 border-0">
+                            <div class="service-icon-wrapper-light mb-4">
+                                <i class="bi bi-box-seam-fill"></i>
+                            </div>
+                            <h3 class="service-title h4 fw-bold mb-3 text-navy">Delivery</h3>
+                            <p class="service-desc text-muted mb-4">
+                                Send packages from one location to another quickly and conveniently.
+                            </p>
+                            <div class="mt-auto">
+                                <a href="#how-it-works" class="service-action-link d-inline-flex align-items-center gap-2">
+                                    <span>Learn more</span>
+                                    <i class="bi bi-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section id="how-it-works" class="how-it-works-section py-5">
+            <div class="container py-lg-4">
+                <div class="section-header text-center mb-5">
+                    <h2 class="section-title h1 fw-bold mt-2 mb-3 text-navy">How GoFlow Works</h2>
+                    <p class="section-subtitle text-muted mx-auto">
+                        Four straightforward steps connecting you to seamless transportation and package delivery.
+                    </p>
+                </div>
+
+                <div class="row g-4 connected-journey-track">
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card step-card-light h-100 p-4 border-0">
+                            <div class="step-node-badge mb-3">01</div>
+                            <h3 class="step-title h5 fw-bold mb-2 text-navy">01 &rarr; Choose Service</h3>
+                            <p class="step-text text-muted mb-0">Choose whether you need a ride or delivery.</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card step-card-light h-100 p-4 border-0">
+                            <div class="step-node-badge mb-3">02</div>
+                            <h3 class="step-title h5 fw-bold mb-2 text-navy">02 &rarr; Enter Details</h3>
+                            <p class="step-text text-muted mb-0">Provide pickup and destination information.</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card step-card-light h-100 p-4 border-0">
+                            <div class="step-node-badge mb-3">03</div>
+                            <h3 class="step-title h5 fw-bold mb-2 text-navy">03 &rarr; Get Matched</h3>
+                            <p class="step-text text-muted mb-0">GoFlow connects you with an available driver or delivery partner.</p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="card step-card-light h-100 p-4 border-0">
+                            <div class="step-node-badge mb-3">04</div>
+                            <h3 class="step-title h5 fw-bold mb-2 text-navy">04 &rarr; Track</h3>
+                            <p class="step-text text-muted mb-0">Track your ride or delivery in real time.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact / CTA Section -->
+        <section id="contact" class="cta-section py-5 text-center">
+            <div class="container py-lg-4">
+                <div class="cta-light-card p-5 mx-auto">
+                    <h2 class="h1 fw-bold text-navy mb-3">Ready to move?</h2>
+                    <p class="cta-desc mb-4 mx-auto">
+                        One platform for every journey. Start your mobility and delivery experience with GoFlow today.
+                    </p>
+                    <div class="d-flex flex-wrap justify-content-center gap-3">
+                        <a href="#services" class="btn btn-primary-goflow btn-lg px-4 py-2">Get Started</a>
+                        <a href="#home" class="btn btn-outline-goflow btn-lg px-4 py-2">Back to Top</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/script.js' %}"></script>
+{% endblock %}

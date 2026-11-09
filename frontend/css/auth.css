@@ -1,0 +1,804 @@
+/* ==========================================================================
+   GoFlow Authentication & Registration Stylesheet
+   Modern, accessible split-layout design for signup and login
+   ========================================================================== */
+
+/* Page Background & Layout Container */
+.signup-page-body,
+.login-page-body,
+.auth-page-body {
+    background-color: #FAFBFD;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-page-section {
+    padding: 2.75rem 0 3.75rem 0;
+    flex: 1 0 auto;
+}
+
+/* Outer Split Card Container */
+.auth-split-card {
+    background-color: var(--goflow-white, #FFFFFF);
+    border: 1px solid var(--goflow-border, #E2E8F0);
+    border-radius: 20px;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.06);
+    overflow: hidden;
+    transition: var(--goflow-transition, all 0.25s ease);
+}
+
+/* ==========================================================================
+   Left Panel: Branding & Value Proposition
+   ========================================================================== */
+.auth-branding-panel {
+    background: linear-gradient(155deg, #FFF8F4 0%, #FFF1EB 55%, #FDEEE6 100%);
+    border-right: 1px solid rgba(255, 107, 44, 0.12);
+    padding: 3.25rem 2.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+
+/* Subtle background accent ring */
+.auth-branding-panel::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 107, 44, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+/* Brand Badge */
+.auth-brand-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    margin-bottom: 2rem;
+}
+
+.auth-brand-badge .brand-logo-icon {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, var(--goflow-orange, #FF6B2C) 0%, #FF8A4C 100%);
+    color: #FFFFFF;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    box-shadow: 0 6px 16px rgba(255, 107, 44, 0.25);
+}
+
+.auth-brand-badge .brand-name {
+    font-weight: 800;
+    font-size: 1.55rem;
+    letter-spacing: -0.5px;
+    color: var(--goflow-navy, #0F172A);
+}
+
+.auth-brand-badge .brand-name span {
+    color: var(--goflow-orange, #FF6B2C);
+}
+
+.auth-branding-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--goflow-orange, #FF6B2C);
+    background-color: rgba(255, 107, 44, 0.12);
+    border: 1px solid rgba(255, 107, 44, 0.22);
+    padding: 0.35rem 0.85rem;
+    border-radius: 9999px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+}
+
+/* Headline & Supporting Text */
+.auth-branding-title {
+    font-size: 2.15rem;
+    font-weight: 800;
+    line-height: 1.22;
+    color: var(--goflow-navy, #0F172A);
+    letter-spacing: -0.8px;
+    margin-bottom: 0.9rem;
+}
+
+.auth-branding-subtitle {
+    font-size: 1.02rem;
+    line-height: 1.6;
+    color: var(--goflow-muted, #64748B);
+    margin-bottom: 2rem;
+    max-width: 420px;
+}
+
+/* Value Benefit Highlights */
+.auth-benefits-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.auth-benefit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.85rem;
+}
+
+.auth-benefit-icon-box {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    color: var(--goflow-orange, #FF6B2C);
+    border: 1.5px solid rgba(255, 107, 44, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+    box-shadow: 0 2px 6px rgba(255, 107, 44, 0.1);
+}
+
+.auth-benefit-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-benefit-title {
+    font-size: 0.96rem;
+    font-weight: 700;
+    color: var(--goflow-navy, #0F172A);
+    line-height: 1.3;
+}
+
+.auth-benefit-desc {
+    font-size: 0.84rem;
+    color: var(--goflow-muted, #64748B);
+    line-height: 1.4;
+    margin-top: 2px;
+}
+
+/* Mobility Graphic Card */
+.auth-mobility-graphic-card {
+    background-color: #FFFFFF;
+    border: 1px solid rgba(255, 107, 44, 0.18);
+    border-radius: 14px;
+    padding: 1.15rem 1.35rem;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+    margin-top: auto;
+    position: relative;
+}
+
+.graphic-route-preview {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.route-point {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.route-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.route-dot-pickup {
+    background-color: var(--goflow-orange, #FF6B2C);
+    box-shadow: 0 0 0 3px rgba(255, 107, 44, 0.2);
+}
+
+.route-dot-dest {
+    background-color: #0EA5C7;
+    box-shadow: 0 0 0 3px rgba(14, 165, 199, 0.2);
+}
+
+.route-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--goflow-navy, #0F172A);
+}
+
+.route-sublabel {
+    font-size: 0.72rem;
+    color: var(--goflow-muted, #64748B);
+}
+
+.route-connector-line {
+    flex: 1;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, #FF6B2C 0, #FF6B2C 6px, transparent 6px, transparent 10px);
+    position: relative;
+    margin: 0 0.5rem;
+}
+
+.route-vehicle-badge {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--goflow-orange, #FF6B2C);
+    color: #FFFFFF;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    box-shadow: 0 2px 6px rgba(255, 107, 44, 0.35);
+}
+
+.graphic-status-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.85rem;
+    padding-top: 0.75rem;
+    border-top: 1px dashed var(--goflow-border, #E2E8F0);
+    font-size: 0.78rem;
+    color: var(--goflow-muted, #64748B);
+}
+
+.graphic-status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: #15803D;
+    font-weight: 700;
+}
+
+.graphic-status-indicator {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: #22C55E;
+    animation: statusPulse 1.8s infinite;
+}
+
+@keyframes statusPulse {
+    0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.5); }
+    70% { box-shadow: 0 0 0 5px rgba(34, 197, 94, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+/* ==========================================================================
+   Right Panel: Registration Form
+   ========================================================================== */
+.auth-form-panel {
+    background-color: #FFFFFF;
+    padding: 3.25rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.auth-form-header {
+    margin-bottom: 2rem;
+}
+
+.auth-form-title {
+    font-size: 1.9rem;
+    font-weight: 800;
+    color: var(--goflow-navy, #0F172A);
+    letter-spacing: -0.5px;
+    margin-bottom: 0.35rem;
+}
+
+.auth-form-subtitle {
+    font-size: 0.98rem;
+    color: var(--goflow-muted, #64748B);
+    margin-bottom: 0;
+}
+
+/* Form Groups & Inputs */
+.auth-form-group {
+    margin-bottom: 1.35rem;
+    position: relative;
+}
+
+.auth-label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--goflow-navy, #0F172A);
+    margin-bottom: 0.45rem;
+}
+
+.auth-label .required-star {
+    color: #EF4444;
+    margin-left: 2px;
+}
+
+.auth-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.auth-input-icon {
+    position: absolute;
+    left: 15px;
+    color: #94A3B8;
+    font-size: 1.15rem;
+    pointer-events: none;
+    transition: var(--goflow-transition, all 0.25s ease);
+    z-index: 2;
+}
+
+.auth-form-control {
+    width: 100%;
+    height: 48px;
+    padding: 0.7rem 1rem 0.7rem 2.85rem;
+    font-size: 0.96rem;
+    font-weight: 500;
+    font-family: inherit;
+    color: var(--goflow-navy, #0F172A);
+    background-color: #FAFCFE;
+    border: 1.5px solid var(--goflow-border, #E2E8F0);
+    border-radius: 12px;
+    outline: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.auth-form-control.has-toggle {
+    padding-right: 3rem;
+}
+
+.auth-form-control::placeholder {
+    color: #94A3B8;
+    font-weight: 400;
+}
+
+.auth-form-control:hover {
+    border-color: #CBD5E1;
+    background-color: #FFFFFF;
+}
+
+.auth-form-control:focus {
+    border-color: var(--goflow-orange, #FF6B2C);
+    background-color: #FFFFFF;
+    box-shadow: 0 0 0 4px rgba(255, 107, 44, 0.18);
+}
+
+.auth-input-wrapper:focus-within .auth-input-icon {
+    color: var(--goflow-orange, #FF6B2C);
+}
+
+/* Password Toggle Button */
+.auth-password-toggle-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #94A3B8;
+    padding: 6px 10px;
+    font-size: 1.15rem;
+    cursor: pointer;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 3;
+}
+
+.auth-password-toggle-btn:hover {
+    color: var(--goflow-navy, #0F172A);
+    background-color: rgba(15, 23, 42, 0.05);
+}
+
+.auth-password-toggle-btn:focus-visible {
+    outline: 2px solid var(--goflow-orange, #FF6B2C);
+    outline-offset: 2px;
+}
+
+/* Field Validation Error State */
+.auth-form-control.is-invalid {
+    border-color: #EF4444;
+    background-color: #FEF2F2;
+}
+
+.auth-form-control.is-invalid:focus {
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.18);
+}
+
+.auth-field-error {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.4rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #DC2626;
+    margin-top: 0.4rem;
+    line-height: 1.35;
+}
+
+.auth-field-error i {
+    font-size: 0.9rem;
+    margin-top: 1px;
+    flex-shrink: 0;
+}
+
+.auth-field-error-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Alert Boxes for Server/Non-field Errors */
+.auth-alert-error {
+    background-color: #FEF2F2;
+    border: 1px solid #FCA5A5;
+    border-radius: 12px;
+    padding: 0.9rem 1.1rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    color: #991B1B;
+}
+
+.auth-alert-error i {
+    font-size: 1.25rem;
+    color: #DC2626;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.auth-alert-content {
+    font-size: 0.88rem;
+    font-weight: 500;
+    line-height: 1.45;
+}
+
+.auth-alert-content strong {
+    font-weight: 700;
+}
+
+.auth-alert-content ul {
+    margin: 0.35rem 0 0 0;
+    padding-left: 1.1rem;
+}
+
+/* ==========================================================================
+   Password Requirements Box
+   ========================================================================== */
+.password-requirements-card {
+    background-color: #F8FAFC;
+    border: 1px solid var(--goflow-border, #E2E8F0);
+    border-radius: 12px;
+    padding: 0.9rem 1.1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1.35rem;
+    transition: all 0.2s ease;
+}
+
+.password-requirements-card:focus-within {
+    border-color: #CBD5E1;
+}
+
+.requirements-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.6rem;
+}
+
+.requirements-title {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--goflow-navy, #0F172A);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0;
+}
+
+.requirements-title i {
+    color: var(--goflow-orange, #FF6B2C);
+    font-size: 0.95rem;
+}
+
+.requirements-note {
+    font-size: 0.72rem;
+    color: var(--goflow-muted, #64748B);
+    font-weight: 500;
+}
+
+.requirements-checklist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.45rem;
+}
+
+.requirement-item {
+    font-size: 0.81rem;
+    color: var(--goflow-muted, #64748B);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    line-height: 1.35;
+    transition: color 0.2s ease;
+}
+
+.requirement-icon {
+    font-size: 0.85rem;
+    width: 14px;
+    text-align: center;
+    flex-shrink: 0;
+    color: #94A3B8;
+    transition: all 0.2s ease;
+}
+
+/* Live validation states */
+.requirement-item.is-valid {
+    color: #166534;
+    font-weight: 600;
+}
+
+.requirement-item.is-valid .requirement-icon {
+    color: #22C55E;
+}
+
+.requirement-item.is-invalid-live {
+    color: #991B1B;
+}
+
+.requirement-item.is-invalid-live .requirement-icon {
+    color: #EF4444;
+}
+
+/* Password Match Indicator */
+.password-match-indicator {
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-top: 0.35rem;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-height: 18px;
+    transition: all 0.2s ease;
+}
+
+.password-match-indicator.matching {
+    color: #166534;
+}
+
+.password-match-indicator.mismatch {
+    color: #DC2626;
+}
+
+/* ==========================================================================
+   Primary Signup Button
+   ========================================================================== */
+.btn-auth-primary {
+    width: 100%;
+    height: 50px;
+    background-color: var(--goflow-orange, #FF6B2C);
+    color: #FFFFFF;
+    border: 1px solid var(--goflow-orange, #FF6B2C);
+    border-radius: 12px;
+    font-size: 1.02rem;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(255, 107, 44, 0.28);
+    transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 0.75rem;
+}
+
+.btn-auth-primary:hover {
+    background-color: var(--goflow-orange-hover, #E85B1F);
+    border-color: var(--goflow-orange-hover, #E85B1F);
+    color: #FFFFFF;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(255, 107, 44, 0.38);
+}
+
+.btn-auth-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(255, 107, 44, 0.25);
+}
+
+.btn-auth-primary:focus-visible {
+    outline: 3px solid rgba(255, 107, 44, 0.5);
+    outline-offset: 2px;
+}
+
+.btn-auth-primary.is-submitting {
+    opacity: 0.85;
+    pointer-events: none;
+}
+
+.btn-auth-primary .btn-arrow-icon {
+    transition: transform 0.2s ease;
+    font-size: 1.1rem;
+}
+
+.btn-auth-primary:hover .btn-arrow-icon {
+    transform: translateX(4px);
+}
+
+/* ==========================================================================
+   Login Link & Footer Navigation
+   ========================================================================== */
+.auth-switch-box {
+    text-align: center;
+    margin-top: 1.6rem;
+    padding-top: 1.4rem;
+    border-top: 1px solid var(--goflow-border, #E2E8F0);
+    font-size: 0.92rem;
+    color: var(--goflow-muted, #64748B);
+}
+
+.auth-switch-link {
+    color: var(--goflow-orange, #FF6B2C);
+    font-weight: 700;
+    text-decoration: none;
+    margin-left: 0.3rem;
+    transition: color 0.15s ease;
+}
+
+.auth-switch-link:hover {
+    color: var(--goflow-orange-hover, #E85B1F);
+    text-decoration: underline;
+}
+
+.auth-switch-link:focus-visible {
+    outline: 2px solid var(--goflow-orange, #FF6B2C);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* Micro Trust Line */
+.auth-trust-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.76rem;
+    color: #94A3B8;
+    margin-top: 1.15rem;
+}
+
+.auth-trust-footer i {
+    color: #22C55E;
+}
+
+/* ==========================================================================
+   Responsive Adaptations
+   ========================================================================== */
+/* Tablet */
+@media (max-width: 991.98px) {
+    .auth-page-section {
+        padding: 1.75rem 0 2.5rem 0;
+    }
+
+    .auth-branding-panel {
+        padding: 2.25rem 2rem;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 107, 44, 0.12);
+    }
+
+    .auth-branding-title {
+        font-size: 1.75rem;
+    }
+
+    .auth-form-panel {
+        padding: 2.25rem 2rem;
+    }
+
+    .auth-mobility-graphic-card {
+        margin-top: 1.5rem;
+    }
+}
+
+/* Mobile */
+@media (max-width: 575.98px) {
+    .auth-page-section {
+        padding: 1rem 0 2rem 0;
+    }
+
+    .auth-split-card {
+        border-radius: 16px;
+        margin: 0;
+        box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+    }
+
+    .auth-branding-panel {
+        padding: 1.75rem 1.25rem;
+    }
+
+    .auth-branding-title {
+        font-size: 1.45rem;
+    }
+
+    .auth-branding-subtitle {
+        font-size: 0.92rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .auth-benefits-list {
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .auth-benefit-item {
+        gap: 0.65rem;
+    }
+
+    .auth-benefit-icon-box {
+        width: 28px;
+        height: 28px;
+        font-size: 0.85rem;
+    }
+
+    .auth-benefit-title {
+        font-size: 0.9rem;
+    }
+
+    .auth-benefit-desc {
+        font-size: 0.8rem;
+    }
+
+    /* Simplify decorative graphic on small mobile screens to keep focus on form */
+    .auth-mobility-graphic-card {
+        display: none;
+    }
+
+    .auth-form-panel {
+        padding: 1.75rem 1.25rem;
+    }
+
+    .auth-form-title {
+        font-size: 1.5rem;
+    }
+
+    .auth-form-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .auth-form-control {
+        font-size: 0.94rem;
+        height: 46px;
+    }
+
+    .btn-auth-primary {
+        height: 48px;
+        font-size: 0.98rem;
+    }
+}
+

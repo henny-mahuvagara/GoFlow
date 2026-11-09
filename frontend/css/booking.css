@@ -1,0 +1,754 @@
+/* ==========================================================================
+   GoFlow — Ride Booking Stylesheet
+   Modern, production-grade Urban Flow Light styling for mobility booking
+   ========================================================================== */
+
+/* --- 1. Variables & Design Tokens (Extending GoFlow Global Tokens) --- */
+:root {
+    --goflow-white: #FFFFFF;
+    --goflow-background: #F8FAFC;
+    --goflow-surface: #FFFFFF;
+    --goflow-surface-subtle: #F1F5F9;
+
+    --goflow-navy: #0F172A;
+    --goflow-navy-light: #334155;
+    --goflow-muted: #64748B;
+    --goflow-border: #E2E8F0;
+    --goflow-border-light: #EDF2F7;
+
+    --goflow-orange: #FF6B2C;
+    --goflow-orange-hover: #E85B1F;
+    --goflow-orange-light: #FFF1EB;
+    --goflow-orange-glow: rgba(255, 107, 44, 0.22);
+
+    --goflow-cyan: #18BFEF;
+    --goflow-cyan-dark: #0EA5C7;
+    --goflow-cyan-light: #EAF9FE;
+
+    --goflow-green: #22C55E;
+    --goflow-green-light: #ECFDF3;
+
+    --goflow-shadow-sm: 0 2px 6px rgba(15, 23, 42, 0.04);
+    --goflow-shadow: 0 10px 30px rgba(15, 23, 42, 0.07);
+    --goflow-shadow-lg: 0 18px 40px rgba(15, 23, 42, 0.09);
+    --goflow-shadow-orange: 0 8px 20px rgba(255, 107, 44, 0.3);
+
+    --goflow-radius-sm: 8px;
+    --goflow-radius-md: 12px;
+    --goflow-radius-lg: 18px;
+    --goflow-radius-xl: 22px;
+    --goflow-radius-pill: 9999px;
+
+    --goflow-transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- 2. Page & Layout --- */
+.booking-page-body {
+    background-color: var(--goflow-background);
+    background-image: 
+        radial-gradient(circle at 15% 15%, rgba(255, 107, 61, 0.08), transparent 35%),
+        radial-gradient(circle at 85% 85%, rgba(255, 107, 61, 0.05), transparent 45%),
+        radial-gradient(circle at 50% 0%, rgba(24, 191, 239, 0.03), transparent 40%);
+    background-attachment: fixed;
+    color: var(--goflow-navy);
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+    position: relative;
+    z-index: 0;
+}
+
+.booking-page-body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    background: 
+        radial-gradient(circle at top right, transparent 65%, rgba(15, 23, 42, 0.015) 65.5%, rgba(15, 23, 42, 0.015) 65.6%, transparent 66%),
+        radial-gradient(circle at bottom left, transparent 60%, rgba(255, 107, 61, 0.02) 60.5%, rgba(255, 107, 61, 0.02) 60.6%, transparent 61%);
+}
+
+.booking-section {
+    padding: 48px 0 80px 0;
+}
+
+.booking-page-header {
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+.booking-page-header .page-title {
+    font-size: 2.35rem;
+    letter-spacing: -0.8px;
+    color: var(--goflow-navy);
+}
+
+.booking-page-header .page-subtitle {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    color: var(--goflow-muted);
+}
+
+.active-booking-nav {
+    box-shadow: var(--goflow-shadow-orange) !important;
+}
+
+/* --- 3. Form Card --- */
+.booking-card {
+    background: var(--goflow-white);
+    border: 1px solid var(--goflow-border);
+    border-radius: var(--goflow-radius-xl);
+    padding: 36px;
+    box-shadow: var(--goflow-shadow-lg);
+    transition: var(--goflow-transition);
+}
+
+.card-header-clean {
+    border-bottom: 0;
+    padding-bottom: 10px;
+}
+
+.card-title {
+    font-size: 1.6rem;
+    color: var(--goflow-navy);
+    letter-spacing: -0.5px;
+}
+
+.form-step-indicator {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.step-num {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--goflow-orange);
+    background: var(--goflow-orange-light);
+    padding: 4px 10px;
+    border-radius: var(--goflow-radius-sm);
+    letter-spacing: 1px;
+}
+
+.step-label {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--goflow-navy);
+}
+
+/* --- 4. Inputs & Controls --- */
+.form-group {
+    position: relative;
+}
+
+.form-label-custom {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--goflow-navy);
+    margin-bottom: 7px;
+}
+
+.required-star {
+    color: var(--goflow-orange);
+    font-weight: 700;
+}
+
+.input-icon-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon {
+    position: absolute;
+    left: 15px;
+    font-size: 1.1rem;
+    color: var(--goflow-muted);
+    pointer-events: none;
+    transition: var(--goflow-transition);
+    z-index: 2;
+}
+
+.form-control-custom {
+    width: 100%;
+    padding: 14px 16px 14px 46px;
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: inherit;
+    color: var(--goflow-navy);
+    background-color: #FAFCFE;
+    border: 1.5px solid var(--goflow-border);
+    border-radius: var(--goflow-radius-md);
+    outline: none;
+    transition: var(--goflow-transition);
+}
+
+.form-control-lg {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    font-size: 1.05rem;
+}
+
+.form-control-custom::placeholder {
+    color: #94A3B8;
+    font-weight: 400;
+}
+
+.form-control-custom:hover {
+    border-color: #CBD5E1;
+    background-color: var(--goflow-white);
+}
+
+.form-control-custom:focus {
+    border-color: var(--goflow-orange);
+    box-shadow: 0 0 0 4px var(--goflow-orange-glow);
+    background-color: var(--goflow-white);
+}
+
+.form-control-custom:focus + .input-icon,
+.input-icon-wrapper:focus-within .input-icon {
+    color: var(--goflow-orange);
+}
+
+/* Error State */
+.form-control-custom.is-invalid,
+.form-select-custom.is-invalid {
+    border-color: #EF4444;
+    background-color: #FEF2F2;
+}
+
+.form-control-custom.is-invalid:focus {
+    box-shadow: 0 0 0 3.5px rgba(239, 68, 68, 0.2);
+}
+
+.error-text {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #EF4444;
+    margin-top: 5px;
+    min-height: 18px;
+    transition: var(--goflow-transition);
+}
+
+/* --- 5. Route Visual Track --- */
+.route-container-clean {
+    position: relative;
+    display: flex;
+    gap: 20px;
+    background: transparent;
+    border: none;
+    padding: 0;
+}
+
+.route-visual-track-clean {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 24px;
+    padding-top: 48px;
+    padding-bottom: 32px;
+}
+
+.route-dot-clean {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    transition: var(--goflow-transition);
+}
+
+.pickup-dot-clean {
+    background-color: var(--goflow-green);
+    border: 4px solid var(--goflow-green-light);
+}
+
+.dest-dot-clean {
+    background-color: var(--goflow-orange);
+    border: 4px solid var(--goflow-orange-light);
+}
+
+.route-line-clean {
+    flex-grow: 1;
+    width: 2px;
+    margin: 8px 0;
+    background: var(--goflow-border);
+}
+
+/* --- 6. Ride Type Grid & Cards --- */
+.ride-type-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 12px;
+}
+
+.ride-type-card {
+    position: relative;
+    background: #FAFCFE;
+    border: 2px solid transparent;
+    border-radius: var(--goflow-radius-lg);
+    padding: 20px 16px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    transition: var(--goflow-transition);
+    outline: none;
+    box-shadow: 0 0 0 1.5px var(--goflow-border);
+}
+
+.ride-type-card:hover {
+    background: var(--goflow-white);
+    transform: translateY(-3px);
+    box-shadow: 0 0 0 1.5px #CBD5E1, var(--goflow-shadow-sm);
+}
+
+.ride-type-card:focus-visible {
+    box-shadow: 0 0 0 3px var(--goflow-orange-glow);
+}
+
+.ride-type-card.selected {
+    border-color: var(--goflow-orange);
+    background-color: var(--goflow-orange-light);
+    box-shadow: 0 6px 20px rgba(255, 107, 44, 0.15);
+}
+
+.ride-type-card.selected .ride-card-icon {
+    color: var(--goflow-orange);
+    transform: scale(1.1);
+}
+
+.ride-type-card.selected .ride-card-title {
+    color: var(--goflow-orange);
+}
+
+.ride-card-icon {
+    font-size: 2.2rem;
+    color: var(--goflow-navy-light);
+    margin-bottom: 12px;
+    transition: var(--goflow-transition);
+    line-height: 1;
+}
+
+.ride-card-title {
+    font-weight: 800;
+    font-size: 1.05rem;
+    color: var(--goflow-navy);
+    margin-bottom: 4px;
+    transition: var(--goflow-transition);
+}
+
+.ride-card-subtitle {
+    font-size: 0.8rem;
+    color: var(--goflow-muted);
+    line-height: 1.3;
+    margin-bottom: 8px;
+}
+
+.ride-card-meta {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--goflow-navy-light);
+}
+
+.ride-type-card.selected .ride-card-meta {
+    color: var(--goflow-orange-hover);
+}
+
+/* Native select fallback / synchronization */
+.form-select-custom {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    color: var(--goflow-navy-light);
+    background-color: var(--goflow-surface-subtle);
+    border: 1px solid var(--goflow-border);
+    border-radius: var(--goflow-radius-sm);
+    outline: none;
+    transition: var(--goflow-transition);
+    cursor: pointer;
+}
+
+.form-select-custom:focus {
+    border-color: var(--goflow-orange);
+    box-shadow: 0 0 0 3px var(--goflow-orange-glow);
+}
+
+/* --- 7. Primary CTA Button --- */
+.booking-btn {
+    width: 100%;
+    min-height: 60px;
+    padding: 16px 28px;
+    background: var(--goflow-orange);
+    color: #FFFFFF;
+    border: none;
+    border-radius: var(--goflow-radius-lg);
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: -0.2px;
+    cursor: pointer;
+    box-shadow: var(--goflow-shadow-orange);
+    transition: var(--goflow-transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.booking-btn:hover {
+    background: linear-gradient(135deg, var(--goflow-orange-hover) 0%, var(--goflow-orange) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(255, 107, 44, 0.42);
+    color: #FFFFFF;
+}
+
+.booking-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(255, 107, 44, 0.28);
+}
+
+.booking-btn:focus-visible {
+    outline: 3px solid rgba(255, 107, 44, 0.5);
+    outline-offset: 3px;
+}
+
+/* Success Message */
+.success-message {
+    margin-top: 18px;
+    margin-bottom: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: var(--goflow-radius-md);
+    transition: var(--goflow-transition);
+    display: none;
+}
+
+.success-message.visible {
+    display: block;
+    padding: 14px 18px;
+    background-color: #ECFDF5;
+    border: 1.5px solid #A7F3D0;
+    color: #065F46;
+    animation: fadeInSlide 0.3s ease forwards;
+}
+
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- 8. Ride Summary Sidebar --- */
+.ride-summary-card {
+    background: var(--goflow-white);
+    border: 1px solid var(--goflow-border);
+    border-radius: var(--goflow-radius-xl);
+    padding: 40px;
+    box-shadow: var(--goflow-shadow);
+    position: sticky;
+    top: 96px;
+    transition: var(--goflow-transition);
+}
+
+.summary-header {
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--goflow-border-light);
+    margin-bottom: 20px;
+}
+
+.summary-title {
+    font-size: 1.25rem;
+    color: var(--goflow-navy);
+    letter-spacing: -0.3px;
+}
+
+.summary-status-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    background: var(--goflow-cyan-light);
+    color: var(--goflow-cyan-dark);
+    border-radius: var(--goflow-radius-pill);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.status-indicator-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--goflow-cyan);
+    box-shadow: 0 0 0 2px rgba(24, 191, 239, 0.3);
+}
+
+.summary-section {
+    margin-bottom: 20px;
+}
+
+/* Summary Route Timeline */
+.summary-route-timeline {
+    position: relative;
+    padding-left: 24px;
+}
+
+.summary-route-point {
+    position: relative;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -24px;
+    top: 4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid #FFFFFF;
+}
+
+.timeline-dot.pickup {
+    background-color: var(--goflow-green);
+    box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.35);
+}
+
+.timeline-dot.dest {
+    background-color: var(--goflow-orange);
+    box-shadow: 0 0 0 2px rgba(255, 107, 44, 0.35);
+}
+
+.timeline-connecting-track {
+    position: absolute;
+    left: -19px;
+    top: 18px;
+    bottom: 24px;
+    width: 2px;
+    background: repeating-linear-gradient(
+        to bottom,
+        #CBD5E1,
+        #CBD5E1 3px,
+        transparent 3px,
+        transparent 6px
+    );
+}
+
+.point-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.point-label {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    color: var(--goflow-muted);
+}
+
+.point-value {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--goflow-navy);
+    word-break: break-word;
+    margin-bottom: 12px;
+    min-height: 20px;
+}
+
+.point-value.active {
+    color: var(--goflow-navy);
+}
+
+.point-value.placeholder {
+    color: #94A3B8;
+    font-weight: 400;
+    font-style: italic;
+}
+
+/* Summary Vehicle Box */
+.vehicle-preview-box {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--goflow-surface-subtle);
+    border: 1px solid var(--goflow-border-light);
+    border-radius: var(--goflow-radius-md);
+    padding: 14px 16px;
+}
+
+.letter-spacing-1 {
+    letter-spacing: 1px;
+}
+
+.vehicle-preview-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: var(--goflow-radius-md);
+    background: var(--goflow-orange-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    color: var(--goflow-orange);
+    flex-shrink: 0;
+}
+
+.vehicle-preview-tier {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--goflow-navy);
+}
+
+.vehicle-preview-desc {
+    font-size: 0.78rem;
+    color: var(--goflow-muted);
+}
+
+/* Estimated Fare Box */
+.summary-fare-box {
+    background: #FFF7ED;
+    border: 1.5px dashed #FDBA74;
+    border-radius: var(--goflow-radius-md);
+    padding: 16px 18px;
+    margin-bottom: 20px;
+}
+
+.fare-label {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #9A3412;
+}
+
+.fare-value {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #C2410C;
+    letter-spacing: -0.5px;
+}
+
+.fare-note {
+    font-size: 0.76rem;
+    color: #9A3412;
+    line-height: 1.4;
+    opacity: 0.9;
+}
+
+/* Trust & Safety Highlights */
+.summary-trust-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.trust-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--goflow-navy-light);
+}
+
+.trust-item i {
+    font-size: 1.05rem;
+    width: 20px;
+    text-align: center;
+}
+
+/* --- 9. Responsive Adjustments --- */
+
+/* Tablets (max-width: 991px) */
+@media (max-width: 991px) {
+    .booking-section {
+        padding: 32px 0 60px 0;
+    }
+
+    .booking-card {
+        padding: 28px;
+    }
+
+    .ride-summary-card {
+        position: static;
+        margin-top: 10px;
+        padding: 26px;
+    }
+}
+
+/* Mobile Devices (max-width: 767px) */
+@media (max-width: 767px) {
+    .booking-page-header .page-title {
+        font-size: 1.85rem;
+    }
+
+    .booking-card {
+        padding: 22px 18px;
+        border-radius: var(--goflow-radius-lg);
+    }
+
+    .route-container-clean {
+        gap: 12px;
+    }
+
+    .route-visual-track-clean {
+        padding-top: 42px;
+    }
+
+    .ride-type-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .ride-type-card {
+        display: flex;
+        align-items: center;
+        text-align: left;
+        padding: 16px 20px;
+        gap: 16px;
+    }
+
+    .ride-card-icon {
+        font-size: 2rem;
+        margin-bottom: 0;
+    }
+
+    .ride-card-subtitle {
+        margin-bottom: 4px;
+    }
+
+    .ride-summary-card {
+        padding: 24px 20px;
+        border-radius: var(--goflow-radius-lg);
+    }
+}
+
+/* Small Screens (max-width: 480px) */
+@media (max-width: 480px) {
+    .booking-page-header .page-title {
+        font-size: 1.65rem;
+    }
+
+    .form-control-custom {
+        padding: 11px 14px 11px 38px;
+        font-size: 0.9rem;
+    }
+
+    .input-icon {
+        left: 12px;
+        font-size: 1rem;
+    }
+
+    .booking-btn {
+        font-size: 0.98rem;
+        min-height: 48px;
+        padding: 12px 18px;
+    }
+}

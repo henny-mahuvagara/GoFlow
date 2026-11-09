@@ -1,0 +1,792 @@
+﻿{% extends 'core/base.html' %}
+
+{% block title %}
+  My Rides | GoFlow
+{% endblock %}
+
+{% block extra_css %}
+  <style>
+    :root {
+      --goflow-white: #ffffff;
+      --goflow-background: #f8fafc;
+      --goflow-surface: #ffffff;
+      --goflow-surface-subtle: #f1f5f9;
+      --goflow-navy: #0f172a;
+      --goflow-navy-light: #334155;
+      --goflow-muted: #64748b;
+      --goflow-border: #e2e8f0;
+      --goflow-border-light: #edf2f7;
+      --goflow-orange: #ff6b2c;
+      --goflow-orange-hover: #e85b1f;
+      --goflow-orange-light: #fff1eb;
+      --goflow-green: #22c55e;
+      --goflow-green-light: #ecfdf3;
+      --goflow-blue: #3b82f6;
+      --goflow-blue-light: #eff6ff;
+      --goflow-red: #ef4444;
+      --goflow-red-light: #fef2f2;
+      --goflow-shadow-sm: 0 2px 6px rgba(15, 23, 42, 0.04);
+      --goflow-shadow: 0 10px 30px rgba(15, 23, 42, 0.07);
+      --goflow-radius-sm: 8px;
+      --goflow-radius-md: 12px;
+      --goflow-radius-lg: 18px;
+      --goflow-radius-pill: 9999px;
+      --goflow-transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* Layout */
+    .main-container {
+      max-width: 900px;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
+    }
+    
+    /* Header Section */
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 2.5rem;
+    }
+    
+    .page-title h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin: 0 0 0.5rem 0;
+      color: var(--goflow-navy);
+      letter-spacing: -0.5px;
+    }
+    
+    .page-title p {
+      margin: 0;
+      color: var(--goflow-navy-light);
+      font-size: 1.1rem;
+    }
+    
+    /* Stats */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+    
+    .stat-card {
+      background: var(--goflow-white);
+      border: 1px solid var(--goflow-border);
+      border-radius: var(--goflow-radius-md);
+      padding: 1.25rem;
+      box-shadow: var(--goflow-shadow-sm);
+    }
+    
+    .stat-card .stat-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--goflow-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.25rem;
+    }
+    
+    .stat-card .stat-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--goflow-navy);
+    }
+    
+    /* Search & Filter */
+    .controls-bar {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .search-wrapper {
+      flex: 1;
+      position: relative;
+    }
+    
+    .search-wrapper i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--goflow-muted);
+      font-size: 1.2rem;
+    }
+    
+    .search-input {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 2.75rem;
+      border: 1px solid var(--goflow-border);
+      border-radius: var(--goflow-radius-md);
+      font-family: inherit;
+      font-size: 1rem;
+      outline: none;
+      transition: var(--goflow-transition);
+      box-sizing: border-box;
+      background: var(--goflow-white);
+    }
+    
+    .search-input:focus {
+      border-color: var(--goflow-orange);
+      box-shadow: 0 0 0 3px var(--goflow-orange-light);
+    }
+    
+    .filter-select {
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--goflow-border);
+      border-radius: var(--goflow-radius-md);
+      font-family: inherit;
+      font-size: 1rem;
+      outline: none;
+      cursor: pointer;
+      background-color: var(--goflow-white);
+      transition: var(--goflow-transition);
+      min-width: 180px;
+    }
+    
+    .filter-select:focus {
+      border-color: var(--goflow-orange);
+    }
+    
+    /* Ride Cards */
+    .rides-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    
+    .ride-card {
+      background: var(--goflow-white);
+      border: 1px solid var(--goflow-border);
+      border-radius: var(--goflow-radius-lg);
+      padding: 1.5rem 1.75rem;
+      box-shadow: var(--goflow-shadow-sm);
+      transition: var(--goflow-transition);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+    
+    .ride-card:hover {
+      border-color: rgba(255, 107, 44, 0.3);
+      box-shadow: var(--goflow-shadow);
+      transform: translateY(-2px);
+    }
+    
+    .ride-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .ride-type-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .ride-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--goflow-orange-light);
+      color: var(--goflow-orange);
+      border-radius: var(--goflow-radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+    
+    .ride-name-group {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .ride-name {
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--goflow-navy);
+      margin: 0;
+      line-height: 1.2;
+    }
+    
+    .ride-subtitle {
+      font-size: 0.85rem;
+      color: var(--goflow-muted);
+      margin: 0;
+    }
+    
+    /* Status Badges */
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0.4rem 1rem;
+      border-radius: var(--goflow-radius-pill);
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .status-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+    
+    .status-confirmed,
+    .status-completed {
+      background-color: var(--goflow-green-light);
+      color: var(--goflow-green);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+    }
+    .status-confirmed::before,
+    .status-completed::before {
+      background-color: var(--goflow-green);
+    }
+    
+    .status-requested,
+    .status-upcoming {
+      background-color: var(--goflow-blue-light);
+      color: var(--goflow-blue);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+    .status-requested::before,
+    .status-upcoming::before {
+      background-color: var(--goflow-blue);
+    }
+    
+    .status-cancelled {
+      background-color: var(--goflow-red-light);
+      color: var(--goflow-red);
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+    .status-cancelled::before {
+      background-color: var(--goflow-red);
+    }
+    
+    /* Route Display */
+    .ride-route {
+      position: relative;
+      padding-left: 28px;
+      margin: 0.5rem 0;
+    }
+    .route-line {
+      position: absolute;
+      left: 7px;
+      top: 24px;
+      bottom: 24px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--goflow-green) 0%, var(--goflow-border) 50%, var(--goflow-orange) 100%);
+      opacity: 0.6;
+    }
+    
+    .route-point {
+      position: relative;
+      margin-bottom: 1.25rem;
+    }
+    .route-point:last-child {
+      margin-bottom: 0;
+    }
+    .route-point::before {
+      content: '';
+      position: absolute;
+      left: -28px;
+      top: 5px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--goflow-white);
+      border: 4px solid;
+      box-sizing: border-box;
+      z-index: 2;
+    }
+    .point-pickup::before {
+      border-color: var(--goflow-green);
+    }
+    .point-dropoff::before {
+      border-color: var(--goflow-orange);
+    }
+    
+    .point-label {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--goflow-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 0.2rem;
+      display: block;
+    }
+    .point-address {
+      font-weight: 600;
+      color: var(--goflow-navy);
+      font-size: 1.05rem;
+      margin: 0;
+    }
+    
+    /* Footer of Card */
+    .ride-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px dashed var(--goflow-border);
+      padding-top: 1.25rem;
+      margin-top: 0.25rem;
+    }
+    
+    .passenger-info {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      color: var(--goflow-navy-light);
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    .passenger-info span {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .passenger-info i {
+      color: var(--goflow-muted);
+      font-size: 1.1rem;
+    }
+    
+    .view-details {
+      color: var(--goflow-orange);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--goflow-transition);
+    }
+    .view-details:hover {
+      color: var(--goflow-orange-hover);
+    }
+    .view-details:hover i {
+      transform: translateX(4px);
+    }
+    .view-details i {
+      transition: var(--goflow-transition);
+    }
+    
+    /* Pagination */
+    .pagination-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+    
+    .pagination-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 40px;
+      height: 40px;
+      padding: 0 12px;
+      border: 1px solid var(--goflow-border);
+      border-radius: 8px;
+      color: var(--goflow-navy);
+      background: var(--goflow-white);
+      text-decoration: none;
+      font-weight: 700;
+      transition: var(--goflow-transition);
+    }
+    
+    .pagination-link:hover {
+      border-color: var(--goflow-orange);
+      color: var(--goflow-orange);
+    }
+    
+    .pagination-link.active {
+      background: var(--goflow-orange);
+      color: #ffffff;
+      border-color: var(--goflow-orange);
+    }
+    
+    .pagination-link.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+    
+    .pagination-info {
+      text-align: center;
+      color: var(--goflow-muted);
+      font-size: 0.9rem;
+      margin-top: 1rem;
+    }
+    /* Empty State */
+    .empty-state {
+      background: var(--goflow-white);
+      border: 1px dashed var(--goflow-border);
+      border-radius: var(--goflow-radius-lg);
+      padding: 5rem 2rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .empty-icon {
+      width: 80px;
+      height: 80px;
+      background: var(--goflow-orange-light);
+      color: var(--goflow-orange);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .empty-state h2 {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--goflow-navy);
+      margin: 0 0 0.5rem 0;
+      letter-spacing: -0.5px;
+    }
+    
+    .empty-state p {
+      color: var(--goflow-navy-light);
+      max-width: 400px;
+      margin: 0 auto 2rem auto;
+      font-size: 1.1rem;
+    }
+    
+    /* Ride action buttons */
+    .btn-primary-goflow {
+      background-color: var(--goflow-orange);
+      color: #ffffff;
+      font-weight: 700;
+      border: none;
+      border-radius: var(--goflow-radius-md);
+      padding: 0.75rem 1.5rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: var(--goflow-transition);
+      box-shadow: 0 4px 12px rgba(255, 107, 44, 0.25);
+    }
+    
+    .btn-primary-goflow:hover {
+      background-color: var(--goflow-orange-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(255, 107, 44, 0.35);
+      color: #ffffff;
+    }
+    
+    .ride-footer form button {
+      transition: all 0.25s ease;
+    }
+    
+    .ride-footer form button:hover {
+      background: #fee2e2 !important;
+      transform: translateY(-1px);
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .main-container {
+        margin: 2rem auto;
+      }
+      .page-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+      .btn-primary-goflow {
+        justify-content: center;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .controls-bar {
+        flex-direction: column;
+      }
+      .ride-card {
+        padding: 1.25rem;
+      }
+      .ride-footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1.25rem;
+      }
+      .view-details {
+        align-self: flex-start;
+      }
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <!-- Main Content -->
+  <div class="main-container">
+    <!-- Header -->
+    <header class="page-header">
+      <div class="page-title">
+        <h1>My Rides</h1>
+        <p>View, manage, and track your GoFlow ride requests.</p>
+      </div>
+      <a href="{% url 'create_ride' %}" class="btn-primary-goflow">
+        <i class="ph-bold ph-plus"></i>
+        Book a Ride
+      </a>
+    </header>
+
+    {% if rides %}
+      <!-- Stats -->
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-card">
+          <div class="stat-title">Total Rides</div>
+          <div class="stat-value" id="stat-total">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-title">Upcoming</div>
+          <div class="stat-value" id="stat-upcoming">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-title">Completed</div>
+          <div class="stat-value" id="stat-completed">0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-title">Cancelled</div>
+          <div class="stat-value" id="stat-cancelled">0</div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls-bar" id="controlsBar">
+        <div class="search-wrapper">
+          <i class="ph ph-magnifying-glass"></i>
+          <input type="text" id="searchInput" class="search-input" placeholder="Search by pickup or destination..." />
+        </div>
+        <select id="statusFilter" class="filter-select">
+          <option value="all">All Statuses</option>
+          <option value="requested">Requested</option>
+          <option value="confirmed">Confirmed</option>
+          <option value="completed">Completed</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+    {% endif %}
+
+    <!-- Rides List -->
+    <div class="rides-list" id="ridesContainer">
+      {% for ride in rides %}
+        <div class="ride-card" data-status="{{ ride.status|lower }}" data-search="{{ ride.pickup_location|lower }} {{ ride.destination|lower }}">
+          <div class="ride-header">
+            <div class="ride-type-info">
+              <div class="ride-icon">
+                {% if 'bike' in ride.ride_type|lower %}
+                  <i class="ph-fill ph-motorcycle"></i>
+                {% elif 'auto' in ride.ride_type|lower %}
+                  <i class="ph-fill ph-taxi"></i>
+                {% else %}
+                  <i class="ph-fill ph-car"></i>
+                {% endif %}
+              </div>
+              <div class="ride-name-group">
+                <h3 class="ride-name">{{ ride.ride_type }}</h3>
+                <p class="ride-subtitle">GoFlow Mobility</p>
+              </div>
+            </div>
+
+            {% if ride.status|lower == 'confirmed' or ride.status|lower == 'completed' %}
+              <div class="status-badge status-confirmed">{{ ride.status }}</div>
+            {% elif ride.status|lower == 'cancelled' %}
+              <div class="status-badge status-cancelled">{{ ride.status }}</div>
+            {% else %}
+              <div class="status-badge status-requested">{{ ride.status }}</div>
+            {% endif %}
+          </div>
+
+          <div class="ride-route">
+            <div class="route-line"></div>
+            <div class="route-point point-pickup">
+              <span class="point-label">Pickup</span>
+              <p class="point-address">{{ ride.pickup_location }}</p>
+            </div>
+            <div class="route-point point-dropoff">
+              <span class="point-label">Destination</span>
+              <p class="point-address">{{ ride.destination }}</p>
+            </div>
+          </div>
+
+          <div class="ride-footer">
+            <div class="passenger-info">
+              <span>
+                <i class="ph-bold ph-user"></i>
+                {{ ride.customer_name }}
+              </span>
+              <span>
+                <i class="ph-bold ph-phone"></i>
+                {{ ride.phone }}
+              </span>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+              <a href="{% url 'update_ride' ride.id %}" class="view-details">
+                <i class="ph-bold ph-pencil-simple"></i>
+                Edit
+              </a>
+
+              <form method="post" action="{% url 'delete_ride' ride.id %}" onsubmit="return confirm('Are you sure you want to delete this ride? This action cannot be undone.');" style="margin: 0;">
+                {% csrf_token %}
+                <button type="submit" style="background: #FEF2F2; color: #EF4444; border: 1px solid #FECACA; border-radius: 8px; padding: 9px 13px; font: inherit; font-weight: 700; cursor: pointer;">
+                  <i class="ph-bold ph-trash"></i>
+                  Delete
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <!-- Empty State from Backend (shown if 0 rides on load) -->
+        <div class="empty-state">
+          <div class="empty-icon">
+            <i class="ph-fill ph-car-profile"></i>
+          </div>
+          <h2>No rides yet</h2>
+          <p>Your booked rides will appear here. Start your first journey with GoFlow.</p>
+          <a href="{% url 'create_ride' %}" class="btn-primary-goflow">Book Your First Ride <i class="ph-bold ph-arrow-right"></i></a>
+        </div>
+      {% endfor %}
+      {% if rides.paginator.num_pages > 1 %}
+        <div class="pagination-container">
+          {% if rides.has_previous %}
+            <a href="?page=1" class="pagination-link"><i class="ph-bold ph-caret-double-left"></i></a>
+
+            <a href="?page={{ rides.previous_page_number }}" class="pagination-link">
+              <i class="ph-bold ph-caret-left"></i>
+              Previous
+            </a>
+          {% else %}
+            <span class="pagination-link disabled"><i class="ph-bold ph-caret-double-left"></i></span>
+
+            <span class="pagination-link disabled">
+              <i class="ph-bold ph-caret-left"></i>
+              Previous
+            </span>
+          {% endif %}
+
+          {% for page_num in rides.paginator.page_range %}
+            {% if rides.number == page_num %}
+              <span class="pagination-link active">{{ page_num }}</span>
+            {% else %}
+              <a href="?page={{ page_num }}" class="pagination-link">{{ page_num }}</a>
+            {% endif %}
+          {% endfor %}
+
+          {% if rides.has_next %}
+            <a href="?page={{ rides.next_page_number }}" class="pagination-link">
+              Next
+              <i class="ph-bold ph-caret-right"></i>
+            </a>
+
+            <a href="?page={{ rides.paginator.num_pages }}" class="pagination-link"><i class="ph-bold ph-caret-double-right"></i></a>
+          {% else %}
+            <span class="pagination-link disabled">
+              Next
+              <i class="ph-bold ph-caret-right"></i>
+            </span>
+
+            <span class="pagination-link disabled"><i class="ph-bold ph-caret-double-right"></i></span>
+          {% endif %}
+        </div>
+
+        <div class="pagination-info">Page {{ rides.number }} of {{ rides.paginator.num_pages }}
+          ({{ rides.paginator.count }} total rides)</div>
+      {% endif %}
+      {% if rides %}
+        <!-- Dynamic Empty State (for filtering) -->
+        <div class="empty-state" id="filterEmptyState" style="display: none;">
+          <div class="empty-icon">
+            <i class="ph-fill ph-magnifying-glass"></i>
+          </div>
+          <h2>No matches found</h2>
+          <p>We couldn't find any rides matching your search and filter criteria.</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block extra_js %}
+  {% if rides %}
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const searchInput = document.getElementById('searchInput')
+        const statusFilter = document.getElementById('statusFilter')
+        const rideCards = document.querySelectorAll('.ride-card')
+        const filterEmptyState = document.getElementById('filterEmptyState')
+      
+        // Initial Counts
+        updateStats()
+      
+        function filterRides() {
+          const searchTerm = searchInput.value.toLowerCase()
+          const filterStatus = statusFilter.value.toLowerCase()
+      
+          let visibleCount = 0
+      
+          rideCards.forEach((card) => {
+            const status = card.getAttribute('data-status')
+            const searchData = card.getAttribute('data-search')
+      
+            const matchesSearch = searchData.includes(searchTerm)
+            const matchesStatus = filterStatus === 'all' || status === filterStatus
+      
+            if (matchesSearch && matchesStatus) {
+              card.style.display = 'flex'
+              visibleCount++
+            } else {
+              card.style.display = 'none'
+            }
+          })
+      
+          if (visibleCount === 0 && rideCards.length > 0) {
+            filterEmptyState.style.display = 'flex'
+          } else {
+            filterEmptyState.style.display = 'none'
+          }
+        }
+      
+        function updateStats() {
+          let total = rideCards.length
+          let upcoming = 0
+          let completed = 0
+          let cancelled = 0
+      
+          rideCards.forEach((card) => {
+            const status = card.getAttribute('data-status')
+            if (status === 'requested' || status === 'confirmed' || status === 'upcoming') upcoming++
+            else if (status === 'completed') completed++
+            else if (status === 'cancelled') cancelled++
+          })
+      
+          document.getElementById('stat-total').textContent = total
+          document.getElementById('stat-upcoming').textContent = upcoming
+          document.getElementById('stat-completed').textContent = completed
+          document.getElementById('stat-cancelled').textContent = cancelled
+        }
+      
+        searchInput.addEventListener('input', filterRides)
+        statusFilter.addEventListener('change', filterRides)
+      })
+    </script>
+  {% endif %}
+{% endblock %}

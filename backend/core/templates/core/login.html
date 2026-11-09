@@ -1,0 +1,278 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Log In - GoFlow | Mobility Made Simple{% endblock %}
+
+{% block body_class %}login-page-body light-urban-grid{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="auth-page-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-xl-11">
+
+                <!-- Split Card Container -->
+                <div class="auth-split-card">
+                    <div class="row g-0">
+
+                        <!-- Left Column: GoFlow Branding, Value Highlights & Mobility Graphic -->
+                        <div class="col-lg-5 col-xl-5">
+                            <aside class="auth-branding-panel">
+                                <div>
+                                    <!-- Brand Logo & Pill -->
+                                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+                                        <a href="{% url 'home' %}" class="auth-brand-badge mb-0" aria-label="GoFlow Home">
+                                            <span class="brand-logo-icon">
+                                                <i class="bi bi-compass-fill"></i>
+                                            </span>
+                                            <span class="brand-name">GO<span>FLOW</span></span>
+                                        </a>
+                                        <span class="auth-branding-pill">
+                                            <i class="bi bi-lightning-charge-fill"></i> Urban Mobility
+                                        </span>
+                                    </div>
+
+                                    <!-- Headline & Supporting Text -->
+                                    <h1 class="auth-branding-title">
+                                        Welcome to a smarter way to move.
+                                    </h1>
+                                    <p class="auth-branding-subtitle">
+                                        Your everyday journeys start with GoFlow. Log in to book rides, manage your trips, and enjoy convenient mobility.
+                                    </p>
+
+                                    <!-- 3 Value Proposition Highlights -->
+                                    <ul class="auth-benefits-list" aria-label="GoFlow Member Benefits">
+                                        <li class="auth-benefit-item">
+                                            <div class="auth-benefit-icon-box" aria-hidden="true">
+                                                <i class="bi bi-geo-alt-fill"></i>
+                                            </div>
+                                            <div class="auth-benefit-content">
+                                                <span class="auth-benefit-title">Easy ride booking</span>
+                                                <span class="auth-benefit-desc">Request on-demand city transit in just a few taps.</span>
+                                            </div>
+                                        </li>
+                                        <li class="auth-benefit-item">
+                                            <div class="auth-benefit-icon-box" aria-hidden="true">
+                                                <i class="bi bi-broadcast"></i>
+                                            </div>
+                                            <div class="auth-benefit-content">
+                                                <span class="auth-benefit-title">Real-time ride updates</span>
+                                                <span class="auth-benefit-desc">Live driver tracking, routes, and arrival notifications.</span>
+                                            </div>
+                                        </li>
+                                        <li class="auth-benefit-item">
+                                            <div class="auth-benefit-icon-box" aria-hidden="true">
+                                                <i class="bi bi-shield-check"></i>
+                                            </div>
+                                            <div class="auth-benefit-content">
+                                                <span class="auth-benefit-title">Convenient mobility services</span>
+                                                <span class="auth-benefit-desc">Reliable transportation, transparent fares, and 24/7 support.</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <!-- Modern Mobility Illustration Card -->
+                                <div class="auth-mobility-graphic-card" aria-hidden="true">
+                                    <div class="graphic-route-preview">
+                                        <div class="route-point">
+                                            <span class="route-dot route-dot-pickup"></span>
+                                            <div>
+                                                <div class="route-label">Pickup Point</div>
+                                                <div class="route-sublabel">Metro Station</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="route-connector-line">
+                                            <span class="route-vehicle-badge">
+                                                <i class="bi bi-car-front-fill"></i>
+                                            </span>
+                                        </div>
+
+                                        <div class="route-point">
+                                            <span class="route-dot route-dot-dest"></span>
+                                            <div>
+                                                <div class="route-label">Destination</div>
+                                                <div class="route-sublabel">Business Park</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="graphic-status-bar">
+                                        <span class="graphic-status-pill">
+                                            <span class="graphic-status-indicator"></span> Live Dispatch Ready
+                                        </span>
+                                        <span>Avg. pickup: 3 min</span>
+                                    </div>
+                                </div>
+
+                                <!-- Trust Line -->
+                                <div class="auth-trust-footer mt-3 mb-0">
+                                    <i class="bi bi-shield-lock-fill"></i>
+                                    <span>256-bit SSL encrypted • Account privacy guaranteed</span>
+                                </div>
+                            </aside>
+                        </div>
+
+                        <!-- Right Column: Login Form Card -->
+                        <div class="col-lg-7 col-xl-7">
+                            <section class="auth-form-panel">
+                                <!-- Form Header -->
+                                <header class="auth-form-header">
+                                    <h2 class="auth-form-title">Welcome Back</h2>
+                                    <p class="auth-form-subtitle">Log in to your GoFlow account.</p>
+                                </header>
+
+                                <!-- Server Error / Non-field Errors -->
+                                {% if form.non_field_errors %}
+                                    <div class="auth-alert-error" role="alert">
+                                        <i class="bi bi-exclamation-triangle-fill"></i>
+                                        <div class="auth-alert-content">
+                                            <strong>Unable to log in:</strong>
+                                            <ul>
+                                                {% for error in form.non_field_errors %}
+                                                    <li>{{ error }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                {% elif form.errors and not form.username.errors and not form.password.errors %}
+                                    <div class="auth-alert-error" role="alert">
+                                        <i class="bi bi-exclamation-triangle-fill"></i>
+                                        <div class="auth-alert-content">
+                                            Invalid username or password. Please try again.
+                                        </div>
+                                    </div>
+                                {% endif %}
+
+                                <!-- Django Flash Messages -->
+                                {% if messages %}
+                                    <div class="mb-3">
+                                        {% for message in messages %}
+                                            <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
+                                                {{ message }}
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+
+                                <!-- Login Form -->
+                                <form method="POST" id="loginForm" action="{% url 'login' %}" novalidate>
+                                    {% csrf_token %}
+
+                                    {% if request.GET.next %}
+                                        <input type="hidden" name="next" value="{{ request.GET.next }}">
+                                    {% elif next %}
+                                        <input type="hidden" name="next" value="{{ next }}">
+                                    {% endif %}
+
+                                    <!-- Field 1: Username -->
+                                    <div class="auth-form-group">
+                                        <label for="id_username" class="auth-label">
+                                            Username <span class="required-star" aria-hidden="true">*</span>
+                                        </label>
+                                        <div class="auth-input-wrapper">
+                                            <i class="bi bi-person auth-input-icon" aria-hidden="true"></i>
+                                            <input
+                                                type="text"
+                                                name="username"
+                                                id="id_username"
+                                                class="auth-form-control{% if form.username.errors %} is-invalid{% endif %}"
+                                                placeholder="Enter your username"
+                                                value="{{ form.username.value|default:'' }}"
+                                                maxlength="150"
+                                                autocomplete="username"
+                                                required
+                                                autofocus
+                                                aria-required="true"
+                                                {% if form.username.errors %}aria-invalid="true" aria-describedby="id_username_error"{% endif %}
+                                            >
+                                        </div>
+                                        {% if form.username.errors %}
+                                            <div class="auth-field-error" id="id_username_error" role="alert">
+                                                <i class="bi bi-exclamation-circle-fill" aria-hidden="true"></i>
+                                                <div class="auth-field-error-list">
+                                                    {% for error in form.username.errors %}
+                                                        <div>{{ error }}</div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+
+                                    <!-- Field 2: Password -->
+                                    <div class="auth-form-group">
+                                        <label for="id_password" class="auth-label">
+                                            Password <span class="required-star" aria-hidden="true">*</span>
+                                        </label>
+                                        <div class="auth-input-wrapper">
+                                            <i class="bi bi-lock auth-input-icon" aria-hidden="true"></i>
+                                            <input
+                                                type="password"
+                                                name="password"
+                                                id="id_password"
+                                                class="auth-form-control has-toggle{% if form.password.errors %} is-invalid{% endif %}"
+                                                placeholder="Enter your password"
+                                                autocomplete="current-password"
+                                                required
+                                                aria-required="true"
+                                                {% if form.password.errors %}aria-invalid="true" aria-describedby="id_password_error"{% endif %}
+                                            >
+                                            <button
+                                                type="button"
+                                                class="auth-password-toggle-btn"
+                                                data-target="id_password"
+                                                aria-label="Show password"
+                                                aria-pressed="false"
+                                            >
+                                                <i class="bi bi-eye" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                        {% if form.password.errors %}
+                                            <div class="auth-field-error" id="id_password_error" role="alert">
+                                                <i class="bi bi-exclamation-circle-fill" aria-hidden="true"></i>
+                                                <div class="auth-field-error-list">
+                                                    {% for error in form.password.errors %}
+                                                        <div>{{ error }}</div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+
+                                    <!-- Submit Button -->
+                                    <button
+                                        type="submit"
+                                        id="loginSubmitBtn"
+                                        class="btn-auth-primary"
+                                    >
+                                        <span>Log In</span>
+                                        <i class="bi bi-arrow-right btn-arrow-icon" aria-hidden="true"></i>
+                                    </button>
+                                </form>
+
+                                <!-- Signup Switch Link -->
+                                <div class="auth-switch-box">
+                                    <span>Don't have an account?</span>
+                                    <a href="{% url 'signup' %}" class="auth-switch-link">Create an Account</a>
+                                </div>
+                            </section>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/auth.js' %}"></script>
+{% endblock %}

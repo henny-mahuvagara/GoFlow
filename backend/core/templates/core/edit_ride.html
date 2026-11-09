@@ -1,0 +1,235 @@
+﻿{% extends 'core/base.html' %}
+
+{% block title %}Edit Ride #{{ ride.id }} | GoFlow{% endblock %}
+
+{% block extra_css %}
+<style>
+  .edit-ride-wrapper {
+    max-width: 700px;
+    margin: 3rem auto;
+    padding: 0 1.5rem;
+  }
+
+  .edit-ride-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+    overflow: hidden;
+  }
+
+  .edit-ride-header {
+    background: linear-gradient(135deg, #FF6B2C 0%, #ff8a4c 100%);
+    padding: 1.75rem 2rem;
+    color: #ffffff;
+  }
+
+  .edit-ride-header h2 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.3px;
+  }
+
+  .edit-ride-header p {
+    margin: 0.25rem 0 0 0;
+    opacity: 0.88;
+    font-size: 0.95rem;
+  }
+
+  .edit-ride-body {
+    padding: 2rem;
+  }
+
+  .edit-form-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.4rem;
+    display: block;
+  }
+
+  .edit-form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 1rem;
+    color: #0f172a;
+    background: #f8fafc;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+  }
+
+  .edit-form-control:focus {
+    outline: none;
+    border-color: #FF6B2C;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(255, 107, 44, 0.12);
+  }
+
+  .edit-form-group {
+    margin-bottom: 1.25rem;
+  }
+
+  .edit-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-save {
+    background: linear-gradient(135deg, #FF6B2C, #E85B1F);
+    color: #ffffff;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    padding: 0.75rem 1.75rem;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(255, 107, 44, 0.25);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(255, 107, 44, 0.35);
+  }
+
+  .btn-cancel {
+    background: #f1f5f9;
+    color: #334155;
+    font-weight: 600;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 0.75rem 1.75rem;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-cancel:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+    transform: translateY(-1px);
+  }
+
+  .alert-error {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #ef4444;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  @media (max-width: 576px) {
+    .edit-ride-body {
+      padding: 1.5rem;
+    }
+    .edit-actions {
+      flex-direction: column;
+    }
+    .btn-save,
+    .btn-cancel {
+      justify-content: center;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+    <div class="edit-ride-wrapper">
+        <div class="edit-ride-card">
+            <div class="edit-ride-header">
+                <h2><i class="bi bi-pencil-square me-2"></i>Edit Ride #{{ ride.id }}</h2>
+                <p>Update the details for this ride booking.</p>
+            </div>
+
+            <div class="edit-ride-body">
+                {% if error %}
+                    <div class="alert-error">
+                        <i class="bi bi-exclamation-circle-fill"></i>
+                        {{ error }}
+                    </div>
+                {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="edit-form-group">
+                        <label class="edit-form-label" for="customer_name">Customer Name</label>
+                        <input class="edit-form-control" id="customer_name" name="customer_name"
+                               value="{{ ride.customer_name }}" required>
+                    </div>
+
+                    <div class="edit-form-group">
+                        <label class="edit-form-label" for="phone">Phone</label>
+                        <input class="edit-form-control" id="phone" name="phone"
+                               value="{{ ride.phone }}" inputmode="numeric"
+                               maxlength="10" required>
+                    </div>
+
+                    <div class="edit-form-group">
+                        <label class="edit-form-label" for="pickup_location">Pickup Location</label>
+                        <input class="edit-form-control" id="pickup_location" name="pickup_location"
+                               value="{{ ride.pickup_location }}" required>
+                    </div>
+
+                    <div class="edit-form-group">
+                        <label class="edit-form-label" for="destination">Destination</label>
+                        <input class="edit-form-control" id="destination" name="destination"
+                               value="{{ ride.destination }}" required>
+                    </div>
+
+                    <div class="edit-form-group">
+                        <label class="edit-form-label" for="ride_type">Ride Type</label>
+                        <select class="edit-form-control" id="ride_type" name="ride_type" required>
+                            <option value="GoBike" {% if ride.ride_type == "GoBike" %}selected{% endif %}>GoBike</option>
+                            <option value="GoAuto" {% if ride.ride_type == "GoAuto" %}selected{% endif %}>GoAuto</option>
+                            <option value="GoCar"  {% if ride.ride_type == "GoCar"  %}selected{% endif %}>GoCar</option>
+                        </select>
+                    </div>
+
+                    <div class="edit-form-group">
+                        <label class="edit-form-label" for="status">Status</label>
+                        <select class="edit-form-control" id="status" name="status" required>
+                            <option value="Requested"   {% if ride.status == "Requested"   %}selected{% endif %}>Requested</option>
+                            <option value="Confirmed"   {% if ride.status == "Confirmed"   %}selected{% endif %}>Confirmed</option>
+                            <option value="In Progress" {% if ride.status == "In Progress" %}selected{% endif %}>In Progress</option>
+                            <option value="Completed"   {% if ride.status == "Completed"   %}selected{% endif %}>Completed</option>
+                            <option value="Cancelled"   {% if ride.status == "Cancelled"   %}selected{% endif %}>Cancelled</option>
+                        </select>
+                    </div>
+
+                    <div class="edit-actions">
+                        <button class="btn-save" type="submit">
+                            <i class="bi bi-check-lg"></i> Save Changes
+                        </button>
+                        <a href="{% url 'rides' %}" class="btn-cancel">
+                            <i class="bi bi-x-lg"></i> Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

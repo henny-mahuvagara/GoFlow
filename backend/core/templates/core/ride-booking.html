@@ -1,0 +1,251 @@
+﻿{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Book a Ride | GoFlow Mobility{% endblock %}
+
+{% block body_class %}booking-page-body{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/booking.css' %}">
+{% endblock %}
+
+{% block content %}
+    <!-- Main Booking Section -->
+    <section id="book-ride" class="booking-section">
+        <div class="container">
+
+            <!-- Page Header -->
+            <div class="booking-page-header text-center mb-5">
+                <h1 class="page-title fw-extrabold mb-3">Book a Ride</h1>
+                <p class="page-subtitle text-muted mx-auto" style="max-width: 400px; font-size: 1.1rem;">
+                    Your journey starts here. Enter your details and choose your ride.
+                </p>
+            </div>
+
+            <!-- Main Grid: Booking Form & Ride Summary -->
+            <div class="row g-4 align-items-start justify-content-center">
+
+                <!-- Left Column: Form Card -->
+                <div class="col-lg-7 col-xl-7">
+                    <div class="booking-card">
+
+                        <div class="card-header-clean mb-4 border-0 pb-0">
+                            <h2 class="card-title fw-bold mb-1 fs-3">Where are you going?</h2>
+                            <p class="card-subtitle text-muted mb-0">Enter your pickup and destination.</p>
+                        </div>
+
+                        <!-- Ride Booking Form (Preserving original ID, names, IDs & validation targets) -->
+                        <form id="rideBookingForm" novalidate>
+
+                            <!-- Section: Rider Information -->
+                            <div class="form-step-indicator mb-3 mt-4">
+                                <span class="step-num">01</span>
+                                <span class="step-label">Passenger</span>
+                            </div>
+
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="fullName" class="form-label-custom">
+                                            Full Name <span class="required-star">*</span>
+                                        </label>
+                                        <div class="input-icon-wrapper">
+                                            <i class="bi bi-person input-icon"></i>
+                                            <input type="text" id="fullName" name="fullName" class="form-control-custom"
+                                                placeholder="Enter your full name" autocomplete="name">
+                                        </div>
+                                        <small id="nameError" class="error-text"></small>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="phone" class="form-label-custom">
+                                            Phone Number <span class="required-star">*</span>
+                                        </label>
+                                        <div class="input-icon-wrapper">
+                                            <i class="bi bi-telephone input-icon"></i>
+                                            <input type="tel" id="phone" name="phone" class="form-control-custom"
+                                                placeholder="Enter 10-digit phone number" autocomplete="tel">
+                                        </div>
+                                        <small id="phoneError" class="error-text"></small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section: Journey Route -->
+                            <div class="form-step-indicator mb-3 mt-5">
+                                <span class="step-num">02</span>
+                                <span class="step-label">Route</span>
+                            </div>
+
+                            <div class="route-container-clean mb-4">
+                                <div class="route-visual-track-clean">
+                                    <div class="route-dot-clean pickup-dot-clean" title="Pickup Point"></div>
+                                    <div class="route-line-clean"></div>
+                                    <div class="route-dot-clean dest-dot-clean" title="Destination Point"></div>
+                                </div>
+
+                                <div class="route-inputs-clean w-100">
+                                    <!-- Pickup Location -->
+                                    <div class="form-group mb-4">
+                                        <label for="pickup" class="form-label-custom">Pickup</label>
+                                        <div class="input-icon-wrapper">
+                                            <i class="bi bi-geo-alt input-icon"></i>
+                                            <input type="text" id="pickup" name="pickup" class="form-control-custom form-control-lg"
+                                                placeholder="Enter pickup location">
+                                        </div>
+                                        <small id="pickupError" class="error-text"></small>
+                                    </div>
+
+                                    <!-- Destination -->
+                                    <div class="form-group">
+                                        <label for="destination" class="form-label-custom">Destination</label>
+                                        <div class="input-icon-wrapper">
+                                            <i class="bi bi-geo-alt-fill input-icon text-orange"></i>
+                                            <input type="text" id="destination" name="destination" class="form-control-custom form-control-lg"
+                                                placeholder="Enter destination">
+                                        </div>
+                                        <small id="destinationError" class="error-text"></small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Section: Ride Type -->
+                            <div class="form-step-indicator mb-3 mt-5">
+                                <span class="step-num">03</span>
+                                <span class="step-label">Choose Your Ride</span>
+                            </div>
+
+                            <div class="form-group mb-2">
+
+                                <!-- Visual Ride Type Cards -->
+                                <div class="ride-type-grid" id="rideTypeCardGrid" role="radiogroup" aria-label="Ride Tier Options">
+                                    <div class="ride-type-card" data-value="bike" tabindex="0" role="radio" aria-checked="false">
+                                        <div class="ride-card-icon">
+                                            <i class="bi bi-bicycle"></i>
+                                        </div>
+                                        <div class="ride-card-info">
+                                            <div class="ride-card-title">GoBike</div>
+                                            <div class="ride-card-subtitle">Quick &amp; economical</div>
+                                            <div class="ride-card-meta">1 Seat</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="ride-type-card" data-value="auto" tabindex="0" role="radio" aria-checked="false">
+                                        <div class="ride-card-icon">
+                                            <i class="bi bi-fuel-pump-fill"></i>
+                                        </div>
+                                        <div class="ride-card-info">
+                                            <div class="ride-card-title">GoAuto</div>
+                                            <div class="ride-card-subtitle">Easy city transit</div>
+                                            <div class="ride-card-meta">3 Seats</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="ride-type-card" data-value="car" tabindex="0" role="radio" aria-checked="false">
+                                        <div class="ride-card-icon">
+                                            <i class="bi bi-car-front-fill"></i>
+                                        </div>
+                                        <div class="ride-card-info">
+                                            <div class="ride-card-title">GoCar</div>
+                                            <div class="ride-card-subtitle">Comfortable ride</div>
+                                            <div class="ride-card-meta">4 Seats</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Native Dropdown for full compatibility & accessibility (synchronized with cards) -->
+                                <div class="mt-2">
+                                    <select id="rideType" name="rideType" class="form-select-custom">
+                                        <option value="">Select ride type</option>
+                                        <option value="bike">GoBike</option>
+                                        <option value="car">GoCar</option>
+                                        <option value="auto">GoAuto</option>
+                                    </select>
+                                </div>
+
+                                <small id="rideTypeError" class="error-text"></small>
+                            </div>
+
+                            <!-- Success Notification (Preserves original ID) -->
+                            <p id="successMessage" class="success-message" role="alert" aria-live="polite"></p>
+
+                        </form>
+
+                    </div>
+                </div>
+
+                <!-- Right Column: Ride Summary Panel -->
+                <div class="col-lg-5 col-xl-5">
+                    <aside class="ride-summary-card" aria-label="Ride Summary">
+
+                        <div class="summary-header mb-4">
+                            <h3 class="summary-title fw-bold mb-0 fs-4">Your Ride</h3>
+                        </div>
+
+                        <!-- Route Summary Tracking -->
+                        <div class="summary-section mb-4">
+                            <h4 class="summary-section-title text-muted text-uppercase fw-bold small mb-3 letter-spacing-1">Your Journey</h4>
+                            <div class="summary-route-simple">
+                                <div class="summary-point d-flex align-items-start gap-3 mb-3">
+                                    <i class="bi bi-circle-fill text-success small mt-1"></i>
+                                    <span class="point-value fw-semibold" id="summaryPickup">Where should we pick you up?</span>
+                                </div>
+                                <div class="summary-point d-flex align-items-start gap-3">
+                                    <i class="bi bi-circle-fill text-orange small mt-1"></i>
+                                    <span class="point-value fw-semibold" id="summaryDestination">Where are you going?</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Selected Vehicle Tier -->
+                        <div class="summary-section mb-4 pt-4 border-top">
+                            <h4 class="summary-section-title text-muted text-uppercase fw-bold small mb-3 letter-spacing-1">Vehicle</h4>
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="vehicle-preview-icon" id="summaryVehicleIcon">
+                                    <i class="bi bi-compass"></i>
+                                </div>
+                                <div class="vehicle-preview-details">
+                                    <div class="vehicle-preview-tier fw-bold fs-5 text-navy" id="summaryRideType">Select a ride tier</div>
+                                    <div class="vehicle-preview-desc text-muted small" id="summaryRideDesc">Choose Bike, Auto, or Car</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Estimated Fare Section -->
+                        <div class="summary-section mb-4 pt-4 border-top">
+                            <div class="d-flex justify-content-between align-items-end mb-1">
+                                <h4 class="summary-section-title text-muted text-uppercase fw-bold small mb-0 letter-spacing-1">Estimated Fare</h4>
+                                <span class="fare-value text-orange fw-extrabold fs-2 lh-1" id="summaryFare">&#8377; --</span>
+                            </div>
+                            <div class="text-muted small mt-2">
+                                Fare calculated after confirmation
+                            </div>
+                        </div>
+
+                        <!-- Primary CTA Button -->
+                        <button type="submit" form="rideBookingForm" class="booking-btn w-100 mt-4" id="submitRideBtn">
+                            <span>Confirm &amp; Book Ride</span>
+                            <i class="bi bi-arrow-right fw-bold"></i>
+                        </button>
+
+                        <!-- Trust & Safety Highlights -->
+                        <div class="d-flex justify-content-center gap-4 mt-4 text-muted small fw-semibold">
+                            <span><i class="bi bi-check-circle-fill text-success me-1"></i> Verified drivers</span>
+                            <span><i class="bi bi-shield-lock-fill text-orange me-1"></i> Secure booking</span>
+                        </div>
+
+                    </aside>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+{% endblock %}
+
+{% block extra_js %}
+    <!-- Custom Booking Script -->
+    <script src="{% static 'js/booking.js' %}" defer></script>
+{% endblock %}

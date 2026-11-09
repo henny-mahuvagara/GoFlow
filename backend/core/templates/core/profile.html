@@ -1,0 +1,281 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}My Profile - GoFlow | Mobility Made Simple{% endblock %}
+
+{% block body_class %}profile-page-body light-urban-grid{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="profile-dashboard-section">
+    <div class="container">
+        <div class="profile-dashboard-container">
+
+            <!-- A. Profile Header -->
+            <header class="profile-header-group">
+                <span class="profile-header-pill">
+                    <i class="bi bi-shield-check"></i> Account Dashboard
+                </span>
+                <h1 class="profile-page-title">
+                    <i class="bi bi-person-badge-fill title-accent-icon" aria-hidden="true"></i>
+                    <span>My Profile</span>
+                </h1>
+                <p class="profile-page-subtitle">
+                    Manage your GoFlow account and personal information.
+                </p>
+            </header>
+
+            <!-- Django Feedback Messages -->
+            {% if messages %}
+                <div class="mb-4">
+                    {% for message in messages %}
+                        <div class="profile-alert profile-alert-{{ message.tags|default:'info' }} alert alert-dismissible fade show" role="alert">
+                            {% if message.tags == 'success' %}
+                                <i class="bi bi-check-circle-fill fs-5 me-2 flex-shrink-0"></i>
+                            {% elif message.tags == 'error' or message.tags == 'danger' %}
+                                <i class="bi bi-exclamation-triangle-fill fs-5 me-2 flex-shrink-0"></i>
+                            {% else %}
+                                <i class="bi bi-info-circle-fill fs-5 me-2 flex-shrink-0"></i>
+                            {% endif %}
+                            <div class="flex-grow-1">{{ message }}</div>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- B. Main Profile Hero Card -->
+            <section class="profile-main-card" aria-label="User Profile Summary">
+                <div class="profile-card-cover" aria-hidden="true"></div>
+
+                <div class="profile-hero-content">
+                    <!-- Profile Picture -->
+                    <div class="profile-avatar-container">
+                        {% if user.profile.profile_image and user.profile.profile_image.name != 'profile_images/default.png' %}
+                            <img
+                                src="{{ user.profile.profile_image.url }}"
+                                alt="{{ user.username }}'s Profile Picture"
+                                class="profile-avatar-img"
+                            >
+                        {% else %}
+                            <div class="profile-avatar-default" aria-label="Default avatar">
+                                <i class="bi bi-person-fill" aria-hidden="true"></i>
+                            </div>
+                        {% endif %}
+                        <span class="profile-avatar-badge" title="GoFlow Verified User">
+                            <i class="bi bi-check-lg" aria-hidden="true"></i>
+                        </span>
+                    </div>
+
+                    <!-- Username & Badges -->
+                    <h2 class="profile-username-title">{{ user.username }}</h2>
+
+                    <div class="profile-badges-row">
+                        <span class="badge-goflow-member">
+                            <i class="bi bi-award-fill" aria-hidden="true"></i>
+                            <span>GoFlow Member</span>
+                        </span>
+                        <span class="badge-status-active">
+                            <span class="status-dot" aria-hidden="true"></span>
+                            <span>Active Account</span>
+                        </span>
+                    </div>
+
+                    <!-- Member Since -->
+                    <div class="profile-joined-text">
+                        <i class="bi bi-calendar3" aria-hidden="true"></i>
+                        <span>Member since {{ user.date_joined|date:"F Y" }}</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- C. Personal Information Section -->
+            <section class="profile-section-card" aria-labelledby="personalInfoHeading">
+                <div class="profile-section-header">
+                    <div class="profile-section-header-left">
+                        <div class="profile-section-icon-box" aria-hidden="true">
+                            <i class="bi bi-person-lines-fill"></i>
+                        </div>
+                        <div>
+                            <h3 class="profile-section-title" id="personalInfoHeading">Personal Information</h3>
+                            <p class="profile-section-desc">Your registered GoFlow credentials.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-fields-container">
+                    <!-- Username Field -->
+                    <div class="profile-field-group">
+                        <label for="profileUsername" class="profile-field-label">
+                            <span>Username</span>
+                            <span class="text-muted small fw-normal">Account Handle</span>
+                        </label>
+                        <div class="profile-input-wrapper">
+                            <i class="bi bi-person profile-input-icon" aria-hidden="true"></i>
+                            <input
+                                type="text"
+                                id="profileUsername"
+                                class="profile-form-control-readonly"
+                                value="{{ user.username }}"
+                                readonly
+                                aria-readonly="true"
+                            >
+                            <i class="bi bi-lock-fill profile-lock-indicator" title="Managed by GoFlow identity" aria-hidden="true"></i>
+                        </div>
+                    </div>
+
+                    <!-- Email Field -->
+                    <div class="profile-field-group">
+                        <label for="profileEmail" class="profile-field-label">
+                            <span>Email Address</span>
+                            <span class="text-muted small fw-normal">Primary Contact</span>
+                        </label>
+                        <div class="profile-input-wrapper">
+                            <i class="bi bi-envelope profile-input-icon" aria-hidden="true"></i>
+                            <input
+                                type="text"
+                                id="profileEmail"
+                                class="profile-form-control-readonly{% if not user.email %} is-empty{% endif %}"
+                                value="{{ user.email|default:'Not provided' }}"
+                                readonly
+                                aria-readonly="true"
+                            >
+                            <i class="bi bi-lock-fill profile-lock-indicator" title="Managed by GoFlow identity" aria-hidden="true"></i>
+                        </div>
+                    </div>
+
+                    <!-- Additional Account Metadata -->
+                    <div class="profile-meta-grid">
+                        <div class="profile-meta-item">
+                            <div class="profile-meta-label">Account Status</div>
+                            <div class="profile-meta-value text-success">
+                                <i class="bi bi-shield-fill-check"></i>
+                                <span>Verified &amp; Active</span>
+                            </div>
+                        </div>
+
+                        <div class="profile-meta-item">
+                            <div class="profile-meta-label">Registration Date</div>
+                            <div class="profile-meta-value">
+                                <i class="bi bi-clock-history text-muted"></i>
+                                <span>{{ user.date_joined|date:"M d, Y" }}</span>
+                            </div>
+                        </div>
+
+                        <div class="profile-meta-item">
+                            <div class="profile-meta-label">Platform Role</div>
+                            <div class="profile-meta-value">
+                                <i class="bi bi-car-front-fill text-muted"></i>
+                                <span>Rider Member</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- D. Profile Picture Management Section -->
+            <section class="profile-section-card" aria-labelledby="profilePictureHeading">
+                <div class="profile-section-header">
+                    <div class="profile-section-header-left">
+                        <div class="profile-section-icon-box" aria-hidden="true">
+                            <i class="bi bi-image"></i>
+                        </div>
+                        <div>
+                            <h3 class="profile-section-title" id="profilePictureHeading">Profile Picture</h3>
+                            <p class="profile-section-desc">Choose an image to personalize your GoFlow account.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Client-side Validation Error Notice -->
+                <div id="profileClientError" class="profile-client-error" role="alert"></div>
+
+                <!-- Upload Form -->
+                <form
+                    method="POST"
+                    enctype="multipart/form-data"
+                    id="profileUploadForm"
+                    action="{% url 'profile' %}"
+                    novalidate
+                >
+                    {% csrf_token %}
+
+                    <!-- Custom Drag & Drop / File Picker Area -->
+                    <div class="profile-upload-zone" id="profileUploadZone">
+                        <input
+                            type="file"
+                            name="profile_image"
+                            id="profile_image"
+                            class="profile-file-input-hidden"
+                            accept="image/png, image/jpeg, image/jpg"
+                            aria-label="Upload profile picture"
+                        >
+                        <div class="upload-zone-icon" aria-hidden="true">
+                            <i class="bi bi-cloud-arrow-up"></i>
+                        </div>
+                        <div class="upload-zone-title">
+                            <span>Click to browse</span> or drag and drop your image
+                        </div>
+                        <p class="upload-zone-hint">
+                            Supports JPG, JPEG, and PNG (Maximum size: 2 MB)
+                        </p>
+                    </div>
+
+                    <!-- Live Image Preview Card -->
+                    <div class="profile-preview-card" id="profilePreviewCard" aria-live="polite">
+                        <img id="previewThumbnail" class="preview-thumbnail" alt="Selected preview">
+                        <div class="preview-details">
+                            <div class="preview-filename" id="previewFilename"></div>
+                            <div class="preview-filesize" id="previewFilesize"></div>
+                        </div>
+                        <button
+                            type="button"
+                            id="btnPreviewCancel"
+                            class="btn-preview-cancel"
+                            title="Cancel selection"
+                            aria-label="Cancel image selection"
+                        >
+                            <i class="bi bi-x-circle-fill"></i>
+                        </button>
+                    </div>
+
+                    <!-- Primary Update Button -->
+                    <button
+                        type="submit"
+                        id="updatePictureBtn"
+                        class="btn-profile-primary"
+                    >
+                        <i class="bi bi-cloud-arrow-up-fill me-2" aria-hidden="true"></i>
+                        <span>Update Profile Picture</span>
+                    </button>
+                </form>
+
+                <!-- Remove Profile Picture Form (Only when custom picture exists) -->
+                {% if user.profile.profile_image and user.profile.profile_image.name != 'profile_images/default.png' %}
+                    <form method="POST" action="{% url 'profile' %}" class="mt-3">
+                        {% csrf_token %}
+                        <button
+                            type="submit"
+                            name="remove_image"
+                            value="1"
+                            class="btn-profile-danger"
+                            onclick="return confirm('Are you sure you want to remove your profile picture?');"
+                        >
+                            <i class="bi bi-trash3 me-2" aria-hidden="true"></i>
+                            <span>Remove Profile Picture</span>
+                        </button>
+                    </form>
+                {% endif %}
+            </section>
+
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/profile.js' %}"></script>
+{% endblock %}
