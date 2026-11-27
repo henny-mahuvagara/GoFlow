@@ -36,3 +36,14 @@ htmlcov/
 build/
 dist/
 *.egg-info/
+
+# GoFlow local database and migration backups
+backend/db.sqlite3*
+backend/goflow_backup.json
+
+# GoFlow uploaded media and media backups
+backend/media/
+backend/media_backup.zip
+
+# GoFlow collected deployment static files
+backend/staticfiles/
