@@ -8,7 +8,7 @@
 {% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
 {% endblock %}
-
+{% comment %} main content area from base.html {% endcomment %}
 {% block content %}
 <main class="profile-dashboard-section">
     <div class="container">
@@ -17,7 +17,7 @@
             <!-- A. Profile Header -->
             <header class="profile-header-group">
                 <span class="profile-header-pill">
-                    <i class="bi bi-shield-check"></i> Account Dashboard
+                    <i class="bi"></i> Account Dashboard
                 </span>
                 <h1 class="profile-page-title">
                     <i class="bi bi-person-badge-fill title-accent-icon" aria-hidden="true"></i>
@@ -29,9 +29,11 @@
             </header>
 
             <!-- Django Feedback Messages -->
+            {% comment %} checks if any msg exists or not {% endcomment %}
             {% if messages %}
                 <div class="mb-4">
                     {% for message in messages %}
+                    {% comment %} msg.tags returns the msg category {% endcomment %}
                         <div class="profile-alert profile-alert-{{ message.tags|default:'info' }} alert alert-dismissible fade show" role="alert">
                             {% if message.tags == 'success' %}
                                 <i class="bi bi-check-circle-fill fs-5 me-2 flex-shrink-0"></i>
@@ -73,7 +75,7 @@
                     <!-- Username & Badges -->
                     <h2 class="profile-username-title">{{ user.username }}</h2>
 
-                    <div class="profile-badges-row">
+                    {% comment %} <div class="profile-badges-row">
                         <span class="badge-goflow-member">
                             <i class="bi bi-award-fill" aria-hidden="true"></i>
                             <span>GoFlow Member</span>
@@ -82,18 +84,18 @@
                             <span class="status-dot" aria-hidden="true"></span>
                             <span>Active Account</span>
                         </span>
-                    </div>
+                    </div> {% endcomment %}
 
                     <!-- Member Since -->
-                    <div class="profile-joined-text">
+                    {% comment %} <div class="profile-joined-text">
                         <i class="bi bi-calendar3" aria-hidden="true"></i>
                         <span>Member since {{ user.date_joined|date:"F Y" }}</span>
-                    </div>
+                    </div> {% endcomment %}
                 </div>
             </section>
 
             <!-- C. Personal Information Section -->
-            <section class="profile-section-card" aria-labelledby="personalInfoHeading">
+            {% comment %} <section class="profile-section-card" aria-labelledby="personalInfoHeading">
                 <div class="profile-section-header">
                     <div class="profile-section-header-left">
                         <div class="profile-section-icon-box" aria-hidden="true">
@@ -174,7 +176,7 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> {% endcomment %}
 
             <!-- D. Profile Picture Management Section -->
             <section class="profile-section-card" aria-labelledby="profilePictureHeading">
