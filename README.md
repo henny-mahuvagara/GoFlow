@@ -85,4 +85,61 @@ EXP-7  ──► Profile Images & Media Handling
 EXP-8  ──► Pagination & Data Filtering
 EXP-9  ──► Deployment & Production Readiness
 EXP-10 ──► Complete GoFlow Full-Stack Application
+
+
+---
+
+## 7. Git Version Control Workflow
+
+GoFlow uses Git and GitHub for source code management and version control.
+
+### Branch Structure
+
+| Branch | Purpose |
+|---|---|
+| `main` | Main branch containing the stable project |
+| `feature-crud` | Development branch for implementing and updating features |
+
+### Git Workflow
+
+The following workflow is used to manage project changes:
+
+**1. Create a feature branch**
+```bash
+git switch -c feature-crud
+```
+
+**2. Check project changes**
+```bash
+git status
+```
+
+**3. Stage modified files**
+```bash
+git add .
+```
+
+**4. Commit changes**
+```bash
+git commit -m "Update GoFlow project documentation"
+```
+
+**5. Push the feature branch to GitHub**
+```bash
+git push -u origin feature-crud
+```
+
+**6. Merge changes into the main branch**
+```bash
+git switch main
+git pull origin main
+git merge feature-crud
+git push origin main
+```
+
+### GitHub Repository
+
+Repository: https://github.com/henny-mahuvagara/GoFlow
+
+All project changes are maintained using Git commits and synchronized with the GitHub repository.
 ```
